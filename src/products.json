@@ -1,0 +1,85 @@
+{
+  "items": [
+    {
+      "sys": { "id": "1" },
+      "fields": {
+        "title": "Berry Crush",
+        "price": 8.00,
+	"category": "crush",	
+        "desc" : "A combination of Blueberries, Strawberries, Apple Juice, Raspberries, Sorbet & Ice.",
+        "image": { "fields": { "file": { "url": "https://www.boostjuicebars.com.my/wp-content/uploads/2017/02/Berry-Crush_cup.png" } } }
+      }
+    },
+    {
+      "sys": { "id": "2" },
+      "fields": {
+        "title": "Superfruit Crush",
+        "price": 9.50,
+	"category": "crush",	
+        "desc" : "A combination of Strawberry Yoghurt, Blueberries, Apple Juice, Raspberries, Superfruit Booster, Energiser Booster, Vanilla Yoghurt & Ice",
+        "image": { "fields": { "file": { "url": "https://www.boostjuicebars.com.my/wp-content/uploads/2019/05/Superfruit-cup.png" } } }
+      }
+    },
+    {
+      "sys": { "id": "3" },
+      "fields": {
+        "title": "Watermelon Lychee Crush",
+        "price": 6.50,
+	"category": "crush",	
+        "desc" : "A combination of Lychee, Sorbet, Ice & Freshly Juiced Watermelon",
+        "image": { "fields": { "file": { "url": "https://www.boostjuicebars.com.my/wp-content/uploads/2017/02/Watermelon-Crush_cup.png" } } }
+      }
+    },
+    {
+"sys": { "id": "4" },
+      "fields": {
+        "title": "Mango Crush",
+        "price": 9.50,
+	"category": "crush",	
+        "desc" : "A combination of Passionfruit, Mango Nectar, Sorbet, Tropical Juice, Mango & Ice",
+        "image": { "fields": { "file": { "url": "https://www.boostjuicebars.com.my/wp-content/uploads/2017/02/Mango-Tango_cup.png" } } }
+      }
+    },
+    {
+      "sys": { "id": "5" },
+      "fields": {
+        "title": "Cookies and Cream",
+        "price": 9.00,
+	"category": "crush",	
+        "desc" : "A combination of Cookie Crumbs, Ice, Low Fat Milk, Sorbet & Vanilla Yoghurt",
+        "image": { "fields": { "file": { "url": "https://www.boostjuicebars.com.my/wp-content/uploads/2018/07/CookiesNCreme_Cup-1.png" } } }
+      }
+    },
+    {
+      "sys": { "id": "6" },
+      "fields": {
+        "title": "Blood Orange",
+        "price": 8.50,
+	"category": "blended",	
+        "desc" : "A combination of Cookie Crumbs, Ice, Low Fat Milk, Sorbet & Vanilla Yoghurt",
+        "image": { "fields": { "file": {"url": "images/Pro1.jpg"} } }
+      }
+    },
+    {
+      "sys": { "id": "7" },
+      "fields": {
+        "title": "Peas Berry",
+        "price": 8.50,
+	"category": "blended",	
+        "desc" : "A combination of Cookie Crumbs, Ice, Low Fat Milk, Sorbet & Vanilla Yoghurt",
+        "image": { "fields": { "file": {"url": "images/Pro2.jpg"} } }
+      }
+    },
+    {
+      "sys": { "id": "8" },
+      "fields": {
+        "title": "Passion Fruit",
+        "price": 8.50,
+	"category": "blended",	
+        "desc" : "A combination of Cookie Crumbs, Ice, Low Fat Milk, Sorbet & Vanilla Yoghurt",
+        "image": { "fields": { "file": {"url": "images/Pro3.jpg"} } }
+      }
+    }
+   
+  ]
+}

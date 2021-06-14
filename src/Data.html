@@ -1,0 +1,297 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<title>Fruit Havana DataPage</title>
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.1/css/font-awesome.min.css">
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+	<link rel="stylesheet" type="text/css" href="css/bootstrap.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+    <link rel="stylesheet" href="css/nav_bar.css">
+    <script type="text/javascript" src="js/jquery-3.5.1.min.js"></script>
+    <script type="text/javascript" src="js/bootstrap.bundle.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.0.0/animate.min.css"/>
+    <link rel="stylesheet" href="css/flip.css">
+	<style type="text/css">
+		body {
+			font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+		}
+		a {
+			text-decoration: none;
+		}
+		table {
+			width: 100%;
+			border-collapse: collapse;
+			margin-top: 20px;
+			margin-bottom: 20px;
+		}
+		table, th, td {
+		   border: 1px solid #bbb;
+		   text-align: left;
+		}
+		tr:nth-child(even) {
+			background-color: #f2f2f2;
+		}
+		th {
+			background-color: #ddd;
+		}
+		th,td {
+			padding: 5px;
+		}
+		button {
+			cursor: pointer;
+		}
+		/*Initial style sort*/
+		.tablemanager th.sorterHeader {
+			cursor: pointer;
+		}
+		.tablemanager th.sorterHeader:after {
+			content: " \f0dc";
+			font-family: "FontAwesome";
+		}
+		.tablemanager th.sortingDesc:after {
+			content: " \f0dd";
+			font-family: "FontAwesome";
+		}
+		.tablemanager th.sortingAsc:after {
+			content: " \f0de";
+			font-family: "FontAwesome";
+		}
+		#for_numrows {
+			padding: 10px;
+			float: left;
+		}
+		#for_filter_by {
+			padding: 10px;
+			float: right;
+		}
+		#pagesControllers {
+			display: block;
+			text-align: center;
+		}
+	</style>
+</head>
+<body>
+	<section id="bar_flix">
+		<div class="container-fluid">
+			<nav class="navbar navbar-inverse">
+			  <div class="container-fluid">
+				<ul class="nav navbar-nav" style="display: inline;">
+				  <li><a id="len1" class="hoverable" href="index.html">Home</a></li>
+				  <li><a id="len2" class="hoverable" href="index.html#sec2">About</a></li>
+				  <li><a id="len3" class="hoverable" href="product-details.html">Juices</a></li>
+				  <li><a id="len4" class="hoverable" href="index.html#contact">Contact</a></li>
+				  <li><a id="len5" class="hoverable" href="promotion.html">Promotions</a></li>
+				  <li><a id="len6" class="hoverable" href="new_product.html">New Products</a></li>
+				  <li><a id="len7" class="hoverable" href="wishlist.html">Wish List</a></li>
+				  <li><a id="len8" class="hoverable" href="cart.html">Cart</a></li>
+				</ul>
+			  </div>
+			</nav>
+		  </div>
+	</section>
+	<header>
+		<h1>Fruit Havana Database</h1>
+		<hr>
+	</header>
+
+    <table class="tablemanager">
+    	<thead>
+    		<tr>
+				<th>Categories</th>
+				<th>ID</th>
+				<th>Name</th>
+				<th>Date</th>	
+				<th class="disableFilterBy">Webpage</th>
+			</tr>
+    	</thead>
+		<tbody>
+				<tr>	
+				<td class="test">Employees</td>
+				<td class="test">1901121</td>
+				<td class="test">Felix</td>
+				<td class="test">10-10-2000</td>		
+				<td class="test"><a href="">-</a></td>
+			</tr>
+
+			<tr>
+				<td>Employees</td>
+				<td>1802520</td>
+				<td>Yew</td>
+				<td>14-04-2000</td>		
+				<td><a href="">-</a></td>
+			</tr>
+			<tr>
+				<td>Investors</td>
+				<td>1904098</td>
+				<td>Tan</td>
+				<td>18-08-2000</td>		
+				<td><a href="">-</a></td>
+			</tr>
+			<tr>
+				<td>Accountant</td>
+				<td>1802886</td>
+				<td>Yeow</td>
+				<td>04-09-2000</td>		
+				<td><a href="">-</a></td>
+			</tr>
+			<tr>
+				<td>Granita Tea</td>
+				<td>P001</td>
+				<td>Granita Tea Passion Fruit</td>
+				<td>01-09-2020</td>		
+				<td><a href="blended.html">blended.html</a></td>
+			</tr>
+			<tr>
+				<td>Granita Tea</td>
+				<td>P002</td>
+				<td>Granita Tea Peas Berry</td>
+				<td>01-09-2020</td>		
+				<td><a href="blended.html">blended.html</a></td>
+			</tr>
+			<tr>
+				<td>Granita Tea</td>
+				<td>P003</td>
+				<td>Granita Tea Blood Orange</td>
+				<td>01-09-2020</td>		
+				<td><a href="blended.html">blended.html</a></td>
+			</tr>
+			<tr>
+				<td>Crushed Juice</td>
+				<td>P004</td>
+				<td>Berry Crush</td>
+				<td>14-05-2020</td>		
+				<td><a href="crush.html">crush.html</a></td>
+			</tr>
+			<tr>
+				<td>Crushed Juice</td>
+				<td>P005</td>
+				<td>Superfruit Crush</td>
+				<td>14-05-2020</td>		
+				<td><a href="crush.html">crush.html</a></td>
+			</tr>
+			<tr>
+				<td>Crushed Juice</td>
+				<td>P006</td>
+				<td>Watermelon Lychee Crush</td>
+				<td>14-05-2020</td>		
+				<td><a href="crush.html">crush.html</a></td>
+			</tr>
+			<tr>
+				<td>Crushed Juice</td>
+				<td>P007</td>
+				<td>Mango Crush</td>
+				<td>14-05-2020</td>		
+				<td><a href="crush.html">crush.html</a></td>
+			</tr>
+			<tr>
+				<td>Crushed Juice</td>
+				<td>P008</td>
+				<td>Cookies and Cream</td>
+				<td>14-05-2020</td>		
+				<td><a href="crush.html">crush.html</a></td>
+			</tr>
+			<tr>
+				<td>Smoothies</td>
+				<td>P009</td>
+				<td>Strawberry Smoothies</td>
+				<td>01-01-2019</td>		
+				<td><a href="smoothie_1.html">smoothie_1.html</a></td>
+			</tr>
+			<tr>
+				<td>Smoothies</td>
+				<td>P010</td>
+				<td>Blueberry Smoothies</td>
+				<td>01-01-2019</td>		
+				<td><a href="smoothie_2.html">smoothie_2.html</a></td>
+			</tr>
+			<tr>
+				<td>Smoothies</td>
+				<td>P011</td>
+				<td>Raspberry Smoothies</td>
+				<td>01-01-2019</td>		
+				<td><a href="smoothie_3.html">smoothie_3.html</a></td>
+			</tr>
+			<tr>
+				<td>Blended</td>
+				<td>P012</td>
+				<td>Orange Juice</td>
+				<td>07-05-2018</td>		
+				<td><a href="juice.html">juice.html</a></td>
+			</tr>
+			<tr>
+				<td>Blended</td>
+				<td>P013</td>
+				<td>Mango Juice</td>
+				<td>07-05-2018</td>		
+				<td><a href="juice.html">juice.html</a></td>
+			</tr>
+			<tr>
+				<td>Blended</td>
+				<td>P014</td>
+				<td>Papaya Juice</td>
+				<td>07-05-2018</td>		
+				<td><a href="juice.html">juice.html</a></td>
+			</tr>
+			<tr>
+				<td>Blended</td>
+				<td>P015</td>
+				<td>Watermelon Juice</td>
+				<td>07-05-2018</td>		
+				<td><a href="juice.html">juice.html</a></td>
+			</tr>
+			<tr>
+				<td>Blended</td>
+				<td>P016</td>
+				<td>Kiwi Juice</td>
+				<td>07-05-2018</td>		
+				<td><a href="juice.html">juice.html</a></td>
+			</tr>
+			<tr>
+				<td>Blended</td>
+				<td>P017</td>
+				<td>Pineapple Juice</td>
+				<td>07-05-2018</td>		
+				<td><a href="juice.html">juice.html</a></td>
+			</tr>
+			<tr>
+				<td>Blended</td>
+				<td>P018</td>
+				<td>Honeydew Juice</td>
+				<td>07-05-2018</td>		
+				<td><a href="juice.html">juice.html</a></td>
+			</tr>
+			<tr>
+				<td>Blended</td>
+				<td>P019</td>
+				<td>Strawberry Juice</td>
+				<td>07-05-2018</td>		
+				<td><a href="juice.html">juice.html</a></td>
+			</tr>
+		</tbody>
+	</table>
+
+
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.2/jquery.min.js"></script>
+	<script type="text/javascript" src="./tableManager.js"></script>
+	<script type="text/javascript">
+		// basic usage
+		$('.tablemanager').tablemanager({
+			firstSort: [[3,0],[2,0],[1,'asc']],
+			disable: ["last"],
+			appendFilterby: true,
+			dateFormat: [[4,"dd-mm-yyyy"]],
+			debug: true,
+			vocabulary: {
+				voc_filter_by: 'Filter By ',
+				voc_type_here_filter: 'Write here to filter.....',
+				voc_show_rows: 'Show lines'
+			},
+			pagination: true,
+			showrows: [5,10,15,20,50],
+			disableFilterBy: [1]
+		});
+	</script>
+</body>
+</html>

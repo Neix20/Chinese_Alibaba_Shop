@@ -1,0 +1,787 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta name = "viewport" content = "width=device-width, initial-scale=1.0">
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Poppins">
+        <link
+          rel="stylesheet"
+          href="https://unpkg.com/leaflet@1.4.0/dist/leaflet.css"
+          integrity="sha512-puBpdR0798OZvTTbP4A8Ix/l+A4dHDD0DGqYW6RQ+9jxkRFclaxxQb/SJAWZfWAkuyeQUytO7+7N4QKrDh+drA=="
+          crossorigin=""
+        />
+        <script
+          src="https://unpkg.com/leaflet@1.4.0/dist/leaflet.js"
+          integrity="sha512-QVftwZFqvtRNi0ZyCtsznlKSWOStnDORoefr1enyq5mVL4tmKB3S/EnC3rRJcxCPavG10IcrVGSmPh6Qw5lwrg=="
+          crossorigin=""
+        ></script>
+        <title>FruitHavana Homepage</title>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Sofia">
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+        <script src="https://kit.fontawesome.com/a076d05399.js"></script>
+
+        <!--Social Worker, Notifications-->
+        <link rel="manifest" href="manifest.json">
+
+        <meta name="mobile-web-app-capable" content="yes">
+        <meta name="apple-mobile-web-app-capable" content="yes">
+        <meta name="application-name" content="Fruit Havana">
+        <meta name="apple-mobile-web-app-title" content="Fruit Havana">
+        <meta name="theme-color" content="#f69435">
+
+        <meta name="msapplication-navbutton-color" content="#f69435">
+        <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+        <meta name="msapplication-starturl" content="/index.html">
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+        <link rel="icon" sizes="192x192" href="images/icon-192x192.png">
+        <link rel="apple-touch-icon" sizes="192x192" href="/images/icon-192x192.png">
+        <link rel="icon" sizes="256x256" href="/images/icon-256x256.png">
+        <link rel="apple-touch-icon" sizes="256x256" href="/images/icon-256x256.png">
+        <link rel="icon" sizes="384x384" href="/images/icon-384x384.png">
+        <link rel="apple-touch-icon" sizes="384x384" href="/images/icon-384x384.png">
+        <link rel="icon" sizes="512x512" href="/images/icon-512x512.png">
+        <link rel="apple-touch-icon" sizes="512x512" href="/images/icon-512x512.png">
+
+        <style>
+            *{
+                margin: 0;
+                padding: 0;
+                box-sizing: border-box;
+                font-family:'Poppins', sans-serif;
+                max-width: width 1920px;
+            }
+            /* width */
+            ::-webkit-scrollbar {
+              width: 20px;
+            }
+
+            /* Track */
+            ::-webkit-scrollbar-track {
+              box-shadow: inset 0 0 5px grey; 
+              border-radius: 10px;
+            }
+
+            /* Handle */
+            ::-webkit-scrollbar-thumb {
+              background: navy; 
+              border-radius: 10px;
+            }
+
+            /* Handle on hover */
+            ::-webkit-scrollbar-thumb:hover {
+              background: green; 
+            }
+            nav{
+                background: linear-gradient(90deg, red, rgb(255, 148, 8), rgb(184, 165, 2));
+                height: 80px;
+                width: 100%;    
+                position:fixed;
+                z-index: 100;
+            }
+            label.logo{
+                color: white;
+                font-size: 35px;
+                line-height: 80px;
+                padding: 0 100px;
+                font-weight: bold;
+                
+            }
+            nav ul{
+                float: right;
+                margin-right: 20px;
+                position: relative;
+                bottom: 90px;
+            }
+            nav ul li{
+                display: inline-block;
+                line-height: 80px;
+                margin: 0 5px;
+            }
+            nav ul li a{
+                color: white;
+                font-size: 17px;
+                padding: 7px 13px;
+                border-radius: 3px;
+                text-transform: uppercase;
+            }
+            a.active,a:hover{
+                background: #e9c600;
+                transition: 0.5s;
+            }
+            .checkbtn{
+                font-size: 30px;
+                color: white;
+                float: right;
+                line-height: 80px;
+                margin-right: 40px;
+                cursor: pointer;
+                display: none;
+                }
+            #check{
+                display: none;
+            }
+            section img{
+                position: absolute;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100%;
+                object-fit: cover;
+                pointer-events: none;
+                z-index: -1;
+               
+            }  
+            .content{
+                max-width: 600px;
+                margin-top: 150px;
+                z-index: 10;
+            }
+            .content h2{
+                color: yellow;
+                font-size: 2.5em;
+            }
+            .content h2 span{
+                color: orange;
+                font-size: 1.2em;
+            }
+            .content p{
+                font-size: 1.2em;
+                color: #fff;
+                font-weight: 300;
+            }
+            .content button{
+                position: relative;
+                display: inline-block;
+                margin-top: 20px;
+                background:white;
+                color: black;
+                padding: 10px 30px;
+                text-decoration: none;
+                font-size: 1.2em;
+                font-weight:500;
+            }
+            .content button:hover{
+                color: yellow;
+            }
+            .size{
+                position: relative;
+                width: 100%;
+                min-height: 100vh;
+                padding:100px;
+                
+                background-color:papayawhip;
+                align-items: center;
+                transition: 0.5s;
+                z-index: 2;
+            }
+            .ref{
+                position: absolute;
+                display: flex;
+                flex-direction: row;
+                right: 100px;  
+                transition: 0.8s;
+            }
+            .ref li{
+                list-style: none;
+               
+            }
+            .ref li a{
+                position: relative;
+                display: grid;
+                place-items: center;
+                width: 50px;
+                height: 50px;
+                text-decoration: none;
+                border: 4px solid transparent;
+                background: white;
+                z-index:0;
+                margin: 3px;
+            }
+            .ref li a.facebook:hover{
+                background-color: #3b5998;
+            }
+            .ref li a.insta:hover{
+                background-color: #ea4c89;
+            }
+            .ref li a.twitter:hover{
+                background-color: #00aced;
+            }
+            .ref li a img{
+                max-width: 50px;
+                max-height: 50px;
+                mix-blend-mode: darken;
+            }
+            .p2{
+                padding:6.5%;
+                background-color: lightgoldenrodyellow;
+            }
+            #mymap {
+                position: relative;
+                left: 60px;
+                height: 400px;
+                width: 500px;
+                z-index: 5;
+                transition: 0.5s;
+                border: 10px solid yellow;
+                
+            }
+            #map{
+                background-color: papayawhip;
+                display: flex;
+                flex-direction: row;
+            }
+            #space{
+                position: relative;
+                width: 100%;
+                height: 40px;
+                padding:100px;
+                display: flex;
+                align-items: center;
+                background-color: papayawhip;
+                transition: 0.5s;
+                z-index: 2;
+            }
+            #invisible{
+                background-color: darkred;
+                color:darkred;
+            }
+
+            .container{
+                
+                width:100%;
+            }
+            .carousel-inner{
+                width: 100%;
+            }
+            #myCarousel{
+                width: fit-content;
+                position:relative;
+                left: 80px;
+                transition: 0.5s;
+            }
+            #textss{
+                position: relative;
+                right: 250px;
+                bottom: 60px;
+                transition: 0.5s;
+            }
+            #boxes{
+                position: relative;
+                
+                bottom: 70px;
+                right: 70px;
+                transition: 0.5s;
+            }
+            .locate{
+                font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
+                font-size: 30px;
+                color: white;
+            }
+            .texta{
+                font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+                font-size: 20px;
+            }
+            .redspaced{
+                background-color: pink;
+            }
+            .yellowspaced{
+                background-color: yellowgreen;
+            }
+            .spaced{
+                background-color: darkred;
+            }
+            #first{
+                background-image: linear-gradient(pink, yellowgreen);
+            }
+            #last{
+                background-color: darkred;
+            }
+
+            video{
+                border: 10px solid goldenrod;
+                background-color: black;
+            }
+            .product{
+                color: purple;
+                font-weight: bold;
+
+            }
+            .ava{
+                color: red;
+                font-size: 20px;
+            }    
+            #logoss{
+                position: relative;
+                bottom: 7px;
+                left: 100px;
+                
+            }
+            .llogo{
+                display: flex;
+                flex-direction: row;
+            }
+            .banner2 {
+                align-content: center;
+                display: none;
+                justify-content: center;
+                width: 100%;
+            }
+            @media(max-width: 507px){
+                header{
+                    padding: 20px 50px; 
+                }
+                .size{
+                    padding: 100px 50px 150px;
+                }
+                .size h2{
+                    font-size: 1.8em;
+                }
+                .size p, .size a{
+                    font-size: 1em;
+                }
+                .size.active{
+                    transform: translateX(-250px);
+                }
+                #mymap{
+                    position: relative;
+                    left: 100px;
+                    height: 300px;
+                    width: 300px;
+                }
+               
+                
+            }
+            @media (max-width: 858px){
+                .checkbtn{
+                    display: block;
+                }
+                nav ul{
+                    position: fixed;
+                    width: 100%;
+                    height: 100vh;
+                    background: #580f2b;
+                    top: 80px;
+                    left: -100%;
+                    text-align: center;
+                    transition: all .5s;
+                    z-index: 5;
+                }
+                nav ul li{
+                    display: block;
+                    margin: 50px 0;
+                    line-height: 30px;
+                }
+                nav ul li a{
+                    font-size: 20px;
+                }
+                #check:checked ~ ul{
+                    left: 0;
+                }  
+
+            }
+            @media (max-width: 952px){
+                label.logo{
+                    font-size: 25px;
+                    padding-left: 50px;
+                    position: relative;
+                    right:15px;
+                    transition:0.5s;
+                }
+                nav ul li a{
+                    font-size: 16px;
+                }
+                #map{
+                    flex-direction: column;
+                }
+                .ref{
+                    position: relative;
+                    left: 0px;
+                    top: 30px;
+                    transition: 0.5s;
+                }
+                #logoss{
+                position: relative;
+                bottom: 7px;
+                left: 30px;
+                }
+                #botref{
+                    position: relative;
+                    bottom:40px;
+                }
+                      
+            }   
+            @media (max-width: 1260px){
+    
+                #boxes{
+                position: relative;
+                top: 0px;
+                right: 0px;
+                transition: 0.5s;
+                }
+                #textss{
+                position: relative;
+                right: 0px;
+                bottom: 0px;
+                transition: 0.5s;
+                }
+                #myCarousel{
+                width: fit-content;
+                position:relative;
+                left: 0px;
+                transition: 0.5s;
+            }
+                .info{
+                position: relative;
+                bottom: 75px;    
+                }
+            }   
+        
+        </style>
+        <script>
+            $(function(){
+                var url = "https://fruithavana.azurewebsites.net/index.html";
+                var weekdays = ["Sunday","Monday","Tuesday","Wednesday","Thursday","Friday","Saturday"];
+                var d = new Date();
+                var sp_promo = ["Strawberry","Blueberry","Raspberry","Smoothie"];
+
+                var body_1 = "Welcome back! Try our new product, Pineapple Juice!";
+                var body_2 = `Come try our latest promotions, since today is ${weekdays[d.getDay()]}, we have a special promotion for all cups named ${sp_promo[d.getDay()%4]}!`;
+
+                var title_1 = "New Products";
+                var title_2 = "New Promotions";
+
+                var pKey_1 = "new_product";
+                var pKey_2 = "promotion";
+
+
+                var image_1 = "images/pineapple-juice.jpg";
+                var image_2 = "images/blueberry.jpg";
+                if('Notification' in window){
+                    Notification.requestPermission(status => {
+                        navigator.serviceWorker.getRegistration(url).then(reg => {
+                            const options = {
+                                body: body_2,
+                                icon: image_2,
+                                vibrate: [100, 50, 100],
+                                data: {
+                                    dateOfArrival: Date.now(),
+                                    primaryKey: pKey_2
+                                },
+                                actions: [
+                                    {action: 'explore', title: 'Go to the site',
+                                    icon: 'images/checkmark.png'},
+                                    {action: 'close', title: 'Close the notification',
+                                    icon: 'images/xmark.png'},
+                                ]          
+                            };
+
+                            reg.showNotification(title_2, options);
+                        })
+                    });
+                    Notification.requestPermission(status => {
+                        navigator.serviceWorker.getRegistration(url).then(reg => {
+                            const options = {
+                                body: body_1,
+                                icon: image_1,
+                                vibrate: [100, 50, 100],
+                                data: {
+                                    dateOfArrival: Date.now(),
+                                    primaryKey: pKey_1
+                                },
+                                actions: [
+                                    {action: 'explore', title: 'Go to the site',
+                                    icon: 'images/checkmark.png'},
+                                    {action: 'close', title: 'Close the notification',
+                                    icon: 'images/xmark.png'},
+                                ]          
+                            };
+
+                            reg.showNotification(title_1, options);
+                        })
+                    });
+                }
+            });
+        </script>
+        <!-- instant chat - Tawk.to -->
+        <script type="text/javascript">
+            var Tawk_API=Tawk_API||{}, Tawk_LoadStart=new Date();
+            (function(){
+            var s1=document.createElement("script"),s0=document.getElementsByTagName("script")[0];
+            s1.async=true;
+            s1.src='https://embed.tawk.to/5f5cc1824704467e89ee6118/default';
+            s1.charset='UTF-8';
+            s1.setAttribute('crossorigin','*');
+            s0.parentNode.insertBefore(s1,s0);
+            })();
+          </script>
+    </head>
+    <body>
+
+        <section id="installBanner" class="banner2">
+            <button id="installBtn">Install app</button>
+        </section>        
+        
+        <nav>
+            <input type="checkbox" id="check">
+            <label for="check" class="checkbtn">
+              <i class="fas fa-bars"></i>
+            </label>
+            <div class="llogo">
+                <img id="logoss" src="images/logo.png" width=80px height=80px>
+                <label class="logo">Fruit Havana</label>
+            </div>
+            <ul>
+              <li><a class="active" href="#">Home</a></li>
+              <li><a href="#sec2">About</a></li>
+              <li><a href="product-details.html">Juices</a></li>
+              <li><a href="#contact">Contact</a></li>
+              <li><a href="promotion.html">Promotions</a></li>
+              <li><a href="new_product.html">New Products</a></li>
+              <li><a href="wishlist.html">Wish List</a></li>
+              <li><a href="cart.html">Cart</a></li>
+              <li><a href="Data.html">Data</a></li>
+            </ul>
+          </nav>
+
+            <section class="size" id="sec">
+            <img src="images/bg.jpg" id="img1" width=1530px height=1080px >
+            <div class="content">
+                
+                <h2>Hello World,<br>Welcome to <span>Fruit Havana</span></h2>
+                <p>"Taste your Curiosity with Fruit Havana! It will definitely meet your best expectations.
+                    A juice for healthy bodies, Freshly squeezed for you.
+                </p>
+                <a href="wishlist.html"><button type="button" class="btn btn-primary">Wishlist</button></a>
+                <a href="cart.html"><button type="button" class="btn btn-primary">View Cart</button></a>
+                <a href="product-details.html"><button type="button" class="btn btn-primary">View Our Drinks</button></a>
+                <a href="#contact"><button type="button" class="btn btn-primary">Find Us</button></a>
+                </div>
+
+                <ul class="ref">
+                    <li><a class="facebook" href="#"><img src="images/facebook.png"></a></li>
+                    <li><a class="insta" href="#"><img src="images/insta.png"></a></li>
+                    <li><a class="twitter" href="#"><img src="images/twitter.png"></a></li>
+                </ul>
+           
+            </section>
+            <div class="redspaced"></br></br></br></br></br></div>
+        
+            <div class="container" id="first">
+                <div class="row">
+                  <div class="col-sm-8">
+                    <div id="myCarousel" class="carousel slide" data-ride="carousel">
+                      <!-- Circle Indicators -->
+                      <ol class="carousel-indicators">
+                        <li data-target="#myCarousel" data-slide-to="0" class="active"></li>
+                        <li data-target="#myCarousel" data-slide-to="1"></li>
+                      </ol>
+                
+                      <!-- images -->
+                      <div class="carousel-inner" role="listbox">
+                        <div class="item active">
+                          <img src="images/granitead.jpg" alt="iceblended image" width=800px height=400px>
+                        </div>
+                
+                        <div class="item">
+                          <img src="images/3th anni.png" alt="3th anniversary image" width=800px height=400px> 
+                        </div>
+                      </div>
+                      
+                      <!-- controls -->
+                      <a class="left carousel-control" href="#myCarousel" role="button" data-slide="prev">
+                        <span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
+                        <span class="sr-only">Previous</span>
+                      </a>
+                      <a class="right carousel-control" href="#myCarousel" role="button" data-slide="next">
+                        <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
+                        <span class="sr-only">Next</span>
+                      </a>
+                    </div>
+                  </div>
+                  <div id="boxes" class="col-sm-4">
+                  </br>
+                  <!-- Announcements -->
+                    <div class="well">
+                        <p class="ava"><u>Available now !</u></p>
+                      <h3><strong><u>Granita Tea Ice Blended</u></strong></h3>
+                      <p class="product">Peas Berry</p>
+                      <p class="product">Blood Orange</p>
+                      <p class="product">Passion Fruit</p>
+                    </div>
+                    <div class="well">
+                       <p class="ava"><u>Upcoming Events..</u></p>
+                       <h3 style="color:purple"><strong>Fruit Havana 3th anniversary</strong></h3>
+                        <h4>Special Discount: 15% on all beverages</h4>
+                        <p>*** Only available for Pickup</p>
+                        <p>*** Terms and condition apply</p>
+                    </div>
+                  </div>
+                </div>
+                <hr>
+                </div>
+
+                
+                <div class="yellowspaced"></br></br></br></br></div>   
+                <!-- About US -->
+            <section class="size" id="sec2" >
+                    <div class="p2">
+                        <img src="images/bg2.jpg" id="img2" width=1530px height=1080px >
+                    <h2>About Us</h2>
+                    <p class="content2" >
+                        Fruit Havana provides a variety of fruit juice drinks such as smoothies, blended juices, crushed juices, 
+                        and Granita Tea ice blended at the Pasar Malam located in Kampar, Perak. Besides that, we develop our traditional 
+                        way of business into an online drinks delivery platform, allowing the customer to have online orders without physical 
+                        restriction. However, we also remain the existing business in Pasar Malam, the customers can choose to order online 
+                        or physically. We provide consumers with an online platform on purchasing our various fruit juice drinks and the 
+                        information about our drinks and our stall.
+                    </p>
+                </br></br></br>
+                    <video width=100% height="350" controls loop>
+                        <source src="videos/videofruit.mp4" type="video/mp4">
+                    </video>
+                    <br><br><br>
+                </div>
+            </section>
+
+           
+            
+            <div class="spaced"></br></br></br></br></div>
+            <!-- Contact US -->
+            <section id="contact">
+                <div class="container" id="last">
+                    <div class="row">
+                      <div class="col-sm-8">
+                        <div id="myCarousel" class="carousel slide" data-ride="carousel">
+                          <div id="mymap"></div>   
+                          <p id="invisible">
+                            latitude: <span id="latitude"></span>&deg;<br />
+                            longitude: <span id="longitude"></span>&deg;
+                          </p>
+                        </div>
+                      </div>
+                      <div class="col-sm-4" id="textss">
+                    </br></br></br>
+                    <div class="info">
+                        <div>
+                            <p class="locate">Locate Us @</p>
+                          </div>
+                          <div class="well">
+                             <p class="texta">Jalan Batu Sinar, 31900 Kampar, Negeri Perak</p>
+                          </div>
+                          <p class="locate">Contact Us [</p>
+                          <div class="well">
+                             <p class="texta">Mr. Tan: +6015-998 1535</p>
+                             <p class="texta">Mr. Lim: +6012-885 6518</p>
+                           
+                          </div>
+                        </div>
+                    </div>
+                    
+                    </div>
+                    <hr>
+                    
+                    </div>
+                    
+            </section>
+            <!-- Footer -->
+            <footer>
+                <div class="container">
+                    <div class="row">
+                      <div class="col-md-8 col-sm-6 col-xs-12">
+                        <p class="copyright-text">Copyright &copy; 2020 All Rights Reserved by 
+                     <a href="#">Fruit Havana</a>.
+                        </p>
+                      </div>
+            
+                      <div class="col-md-4 col-sm-6 col-xs-12">
+                        <ul class="ref">
+                            <li><a class="facebook" id="botref" href="#"><img src="images/facebook.png"></a></li>
+                            <li><a class="insta" id="botref" href="#"><img src="images/insta.png"></a></li>
+                            <li><a class="twitter" id="botref" href="#"><img src="images/twitter.png"></a></li>
+                        </ul>
+                      </div>
+                    </div>
+            </footer>
+            <table class="table" style="display: none;">
+                <thead class="thead-dark text-center">
+                    <tr><th>Push Messaging</th></tr>
+                </thead>
+                <tbody>
+                    <tr><td><button class="js-push-btn">Enable Push Messaging</button></td></tr>
+                    <div class="js-sub-endpoint">
+                        <tr><td>Subscription Object:</td></tr>
+                        <tr><td style="word-wrap:break-word;"><code class="js-subscription-json"></code></td></tr>
+                        <tr><td>Endpoint URL:</td></tr>
+                        <tr><td style="word-wrap:break-word;"><code class="js-endpoint-url"></code></td></tr>
+                    </div>
+                </tbody>
+            </table>
+            
+
+            <script>
+                if ('geolocation' in navigator) {
+                    console.log('geolocation available');
+                    navigator.geolocation.getCurrentPosition(position => {
+                    lat = position.coords.latitude;
+                    lon = position.coords.longitude;
+                    console.log(lat, lon);
+                    document.getElementById('latitude').textContent = lat;
+                    document.getElementById('longitude').textContent = lon;
+
+                    const mymap = L.map('mymap').setView([lat, lon], 6);
+                    const attribution =
+                      '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors';
+                    const tileUrl = 'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png';
+                    const tiles = L.tileLayer(tileUrl, { attribution });
+                    tiles.addTo(mymap);
+                    const marker = L.marker([lat, lon]).addTo(mymap);
+                    
+                    const fruithav = L.marker([4.326350, 101.139405]).addTo(mymap);
+                    var latlngs = Array();
+
+                    //Get latlng from first marker
+                    latlngs.push(marker.getLatLng());
+                                        
+                    //Get latlng from first marker
+                    latlngs.push(fruithav.getLatLng());
+                                        
+                    var polyline = L.polyline(latlngs, {color: 'red'}).addTo(mymap);
+                                        
+                    // zoom the map to the polyline
+                    map.fitBounds(polyline.getBounds());
+                });
+                } else {
+                  console.log('geolocation not available');
+                }
+
+
+                let image1 = document.getElementById('img1');
+                let image2 = document.getElementById('img2');
+                
+                window.addEventListener('scroll',function(){  //scroll down will make transparent downwards
+                //parallax scrolling
+                    
+                    let value = 1.5 + window.scrollY / -600;
+                    image1.style.opacity = value;
+                })
+
+                window.addEventListener('scroll',function(){  //scroll down will make transparent downwards
+                //parallax scrolling
+                    
+                    let value = 4.2 + window.scrollY / -600;
+                    image2.style.opacity = value;
+                })
+               
+                
+               </script>
+               <script src="js/main_h.js"></script>
+               <script src="js/sc_sw.js"></script>
+               
+           
+    </body>
+</html>

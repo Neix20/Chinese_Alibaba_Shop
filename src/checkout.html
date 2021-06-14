@@ -1,0 +1,295 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" type="text/css" href="css/bootstrap.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+    <link rel="stylesheet" href="css/nav_bar.css">
+    <script type="text/javascript" src="js/jquery-3.5.1.min.js"></script>
+    <script type="text/javascript" src="js/bootstrap.bundle.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.0.0/animate.min.css" />
+    <style>
+        .section_1 {
+            background-size: cover;
+            background: url(images/ice_bg.jpg) no-repeat center center fixed;
+            height: 75vh;
+            width: 100%;
+        }
+    </style>
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-177834862-1"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+
+        function gtag() {
+            dataLayer.push(arguments);
+        }
+        gtag('js', new Date());
+
+        gtag('config', 'UA-177834862-1');
+    </script>
+    <script>
+        $(function() {
+            if (typeof(Storage) != "undefined") {
+                if (!("cart" in sessionStorage) && !("cart2" in sessionStorage)) {
+                    $("body").append(`<h1 class="text-center">There appears to be nothing here...</h1>`);
+                    $("#receipt-table").css("display", "none");
+                    return;
+                }
+
+                let total = 0;
+
+                var item_price = {};
+
+                if ("cart" in sessionStorage) {
+                    let cart_arr = JSON.parse(sessionStorage.getItem("cart"));
+
+                    for (let i in cart_arr) {
+                        $("#receipt-table").append(`<tr><td>${cart_arr[i].title}</td><td>${cart_arr[i].amount}</td><th class="text-center">RM${(cart_arr[i].price * cart_arr[i].amount).toFixed(2)}</th></tr>`);
+                        item_price[cart_arr[i].title] = cart_arr[i].price * cart_arr[i].amount;
+                        total += cart_arr[i].price * cart_arr[i].amount;
+                    }
+                }
+
+                if ("cart2" in sessionStorage) {
+                    let cart_arr_2 = JSON.parse(sessionStorage.getItem("cart2"));
+
+                    for (let i in cart_arr_2) {
+                        $("#receipt-table").append(`<tr><td>${cart_arr_2[i].name}</td><td>${cart_arr_2[i].quantity}</td><th class="text-center">RM${cart_arr_2[i].total_price.toFixed(2)}</th></tr>`);
+                        item_price[cart_arr_2[i].name] = cart_arr_2[i].total_price;
+                        total += cart_arr_2[i].total_price;
+                    }
+                }
+
+                if ("promotions" in localStorage) {
+                    let total_reduction = 0;
+                    let promo = JSON.parse(localStorage.getItem("promotions"));
+
+                    promo = Object.keys(promo).sort((a, b) => a[0] > b[0]).map(key => promo[key]);
+
+                    $("#receipt-table").append(`<tr><th class="bg-dark text-center" style="color: white; font-size: 30px;" colspan="3">Coupon List</th></tr>`);
+
+                    for (let i in promo) {
+                        if (promo[i].type === "Promotion")
+                            continue;
+                        let properties = [];
+                        for (let j in promo[i]) {
+                            properties.push(promo[i][j]);
+                        }
+
+                        total_reduction += parseFloat(properties[2]);
+
+                        properties[2] = parseFloat(properties[2]).toFixed(1) + "%";
+                        $("#receipt-table tbody").append(`<tr><td colspan="2">${properties[0]}</td><td>${properties[2]}</td></tr>`);
+                    }
+
+                    $("#receipt-table tbody").append(`<tr><th colspan="2" class="text-center">Total Reduction</th><td>${total_reduction.toFixed(1)}%</td></tr>`);
+
+                    $("#receipt-table tbody").append(`<tr><th colspan="3" class="bg-dark text-center" style="color: white; font-size: 30px;">Promotion List</th></tr>`);
+                    $("#receipt-table tbody").append(`<tr><td>${promo[promo.length - 1].type}</td><td>${promo[promo.length - 1].special}</td><td>25%</td></tr>`);
+
+                    var weekdays = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
+                    var d = new Date();
+
+                    var word_str = "";
+
+                    switch (weekdays[d.getDay()]) {
+                        case 'Sunday':
+                            word_str = "Strawberry";
+                            break;
+                        case 'Monday':
+                            word_str = "Blueberry";
+                            break;
+                        case 'Tuesday':
+                            word_str = "Raspberry";
+                            break;
+                        case 'Wednesday':
+                            word_str = "Blueberry";
+                            break;
+                        case 'Thursday':
+                            word_str = "Raspberry";
+                            break;
+                        case 'Friday':
+                            word_str = "berry";
+                            break;
+                        case 'Saturday':
+                            word_str = "Strawberry";
+                            break;
+                    }
+
+                    var promo_reduc = 0.25;
+                    total = 0;
+
+                    for (let i in item_price) {
+                        if (i.indexOf(word_str) > -1) {
+                            item_price[i] = item_price[i] * (1 - promo_reduc);
+                        }
+                        total += item_price[i];
+                    }
+
+                    total = total * (100 - total_reduction) / 100;
+                    localStorage.removeItem("promotions");
+                }
+                $("#receipt-table").append(`<tr><th colspan="2" class="text-center">Total Price: </th><th class="text-center">RM${total.toFixed(2)}</th></tr>`)
+            }
+        })
+    </script>
+</head>
+
+<body>
+    <section id="bar_flix">
+        <div class="container-fluid">
+            <nav class="navbar navbar-inverse">
+                <div class="container-fluid">
+                    <ul class="nav navbar-nav" style="display: inline;">
+                        <li><a id="len1" class="hoverable" href="index.html">Home</a></li>
+                        <li><a id="len2" class="hoverable" href="index.html#sec2">About</a></li>
+                        <li><a id="len3" class="hoverable" href="product-details.html">Juices</a></li>
+                        <li><a id="len4" class="hoverable" href="index.html#contact">Contact</a></li>
+                        <li><a id="len5" class="hoverable" href="promotion.html">Promotions</a></li>
+                        <li><a id="len6" class="hoverable" href="new_product.html">New Products</a></li>
+                        <li><a id="len7" class="hoverable" href="wishlist.html">Wish List</a></li>
+                        <li><a id="len8" class="hoverable" href="cart.html">Cart</a></li>
+                    </ul>
+                </div>
+            </nav>
+        </div>
+    </section>
+    <div class="section_1">
+        <div class="d-flex align-items-center justify-content-center h-100 section_1">
+            <div class="text-center animate__animated animate__heartBeat" style="width: 800px; height: 200px; background-color:rgb(3, 238, 160);" id="bg-1">
+                <h1 style="color: white; font-family:Arial, Helvetica, sans-serif; font-size: 1000%;">Checkout</h1>
+            </div>
+        </div>
+    </div>
+
+    <div class="d-flex align-items-center justify-content-center py-5">
+        <table id="receipt-table" class="table text-center table-bordered" style="height: 400px; width: 800px;">
+            <thead>
+                <tr>
+                    <td colspan="3" class="bg-dark" style="color: white;font-size: 30px;">Items</td>
+                </tr>
+            </thead>
+            <tbody>
+            </tbody>
+        </table>
+    </div>
+
+    <div class="form-group">
+        <button><a href="Simple_Product_Purchase_Form.html">Add Shipping Address</a></button>
+        <input type="button" id="create_pdf" value="Generate PDF">
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/1.3.5/jspdf.min.js"></script>
+
+    <script>
+        (function() {
+            var
+                form = $('#receipt-table'),
+                cache_width = form.width(),
+                a4 = [595.28, 841.89]; // for a4 size paper width and height  
+
+            $('#create_pdf').on('click', function() {
+                $('body').scrollTop(0);
+                createPDF();
+            });
+            //create pdf  
+            function createPDF() {
+                getCanvas().then(function(canvas) {
+                    var
+                        img = canvas.toDataURL("image/png"),
+                        doc = new jsPDF({
+                            unit: 'px',
+                            format: 'a4'
+                        });
+                    doc.addImage(img, 'JPEG', 20, 20);
+                    doc.save('payment.pdf');
+                    form.width(cache_width);
+                });
+            }
+
+            // create canvas object  
+            function getCanvas() {
+                form.width((a4[0] * 1.33333) - 80).css('max-width', 'none');
+                return html2canvas(form, {
+                    imageTimeout: 2000,
+                    removeContainer: true
+                });
+            }
+
+        }());
+    </script>
+    <script>
+        /* 
+         * jQuery helper plugin for examples and tests 
+         */
+        (function($) {
+            $.fn.html2canvas = function(options) {
+                var date = new Date(),
+                    $message = null,
+                    timeoutTimer = false,
+                    timer = date.getTime();
+                html2canvas.logging = options && options.logging;
+                html2canvas.Preload(this[0], $.extend({
+                    complete: function(images) {
+                        var queue = html2canvas.Parse(this[0], images, options),
+                            $canvas = $(html2canvas.Renderer(queue, options)),
+                            finishTime = new Date();
+
+                        $canvas.css({
+                            position: 'absolute',
+                            left: 0,
+                            top: 0
+                        }).appendTo(document.body);
+                        $canvas.siblings().toggle();
+
+                        $(window).click(function() {
+                            if (!$canvas.is(':visible')) {
+                                $canvas.toggle().siblings().toggle();
+                                throwMessage("Canvas Render visible");
+                            } else {
+                                $canvas.siblings().toggle();
+                                $canvas.toggle();
+                                throwMessage("Canvas Render hidden");
+                            }
+                        });
+                        throwMessage('Screenshot created in ' + ((finishTime.getTime() - timer) / 1000) + " seconds<br />", 4000);
+                    }
+                }, options));
+
+                function throwMessage(msg, duration) {
+                    window.clearTimeout(timeoutTimer);
+                    timeoutTimer = window.setTimeout(function() {
+                        $message.fadeOut(function() {
+                            $message.remove();
+                        });
+                    }, duration || 2000);
+                    if ($message)
+                        $message.remove();
+                    $message = $('<div ></div>').html(msg).css({
+                        margin: 0,
+                        padding: 10,
+                        background: "#000",
+                        opacity: 0.7,
+                        position: "fixed",
+                        top: 10,
+                        right: 10,
+                        fontFamily: 'Tahoma',
+                        color: '#fff',
+                        fontSize: 12,
+                        borderRadius: 12,
+                        width: 'auto',
+                        height: 'auto',
+                        textAlign: 'center',
+                        textDecoration: 'none'
+                    }).hide().fadeIn().appendTo('body');
+                }
+            };
+        })(jQuery);
+    </script>
+</body>
+
+</html>

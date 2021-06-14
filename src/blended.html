@@ -1,0 +1,337 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Granita Ice Blended</title>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Poppins">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" href="css/nav_bar.css">
+    <style>
+        *{
+            margin: 0;
+            padding: 0px;
+            font-family: 'Poppins', sans-serif;
+        }
+        body{
+            background: goldenrod;
+        }
+        .juices{
+            display:flex;
+            justify-content: center;
+            align-items: center;
+            background-image: url('images/logo.png');
+            background-size: 600px;
+        }
+        .container{
+            position: relative;
+            top: 80px;
+            width: 1100px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-wrap: wrap;
+            padding: 30px;
+        }
+        .container .card{
+            position: relative;
+            max-width: 300px;
+            height: 215px;
+            background: #fff;
+            margin: 120px 10px;
+            padding: 20px 15px;
+            display: flex;
+            flex-direction: column;
+            box-shadow: 0 5px 202px rgba(0,0,0,0.5);
+            transition: 0.3s ease-in-out;
+            justify-content: space-evenly;
+        }
+        .container .card:hover{
+            height: 450px;
+        }
+        .container .card .imgBx{
+            position: relative;
+            width: auto;
+            text-align:center; 
+            padding: 20px; 
+            height: auto;
+            top: -100px;
+            left: 6px;
+            z-index: 1;
+            
+        }
+        .container .card .imgBx img{
+            max-width: 100%;
+            height: auto;
+            border-radius: 4px;
+        }
+        .container .card .content{
+            position: relative;
+            bottom: 80px;
+            margin-top: -140px;
+            padding: 10px 15px;
+            text-align: center;
+            color: rgb(204, 22, 22);
+            visibility: hidden;
+            opacity: 0;
+            transition: 0.3s ease-in-out;
+        }
+        .container .card:hover .content{
+            visibility: visible;
+            opacity: 1;
+            margin-top: -40px;
+            transition-delay: 0.3s;
+        }
+        #name{
+            font-size: 110px;
+            background-color:rgb(160, 122, 25);
+        }
+  
+        @keyframes bounce-animation {
+            16.65% {
+              -webkit-transform: translateY(8px);
+              transform: translateY(8px);
+            }
+          
+            33.3% {
+              -webkit-transform: translateY(-6px);
+              transform: translateY(-6px);
+            }
+          
+            49.95% {
+              -webkit-transform: translateY(4px);
+              transform: translateY(4px);
+            }
+          
+            66.6% {
+              -webkit-transform: translateY(-2px);
+              transform: translateY(-2px);
+            }
+          
+            83.25% {
+              -webkit-transform: translateY(1px);
+              transform: translateY(1px);
+            }
+          
+            100% {
+              -webkit-transform: translateY(0);
+              transform: translateY(0);
+            }
+        }
+        
+        .bounce {
+            animation-name: bounce-animation;
+            animation-duration: 2s;
+        }
+        
+        h1{
+            transition: 0.5s;
+        }
+        h1:hover { 
+        text-shadow: 0 1px 0 #ccc, 0 2px 0 #ccc, 
+                     0 3px 0 #ccc, 0 4px 0 #ccc, 
+                     0 5px 0 #ccc, 0 6px 0 #ccc, 
+                     0 7px 0 #ccc, 0 8px 0 #ccc, 
+                     0 9px 0 #ccc, 0 10px 0 #ccc, 
+                     0 11px 0 #ccc, 0 12px 0 #ccc, 
+                     0 20px 30px rgba(0, 0, 0, 0.5); 
+        } 
+        .love{
+            cursor: pointer;
+            font-size:18px;
+            color: darkred;
+        }
+        .love:hover{
+            animation: bounce 2.5s infinite;
+        }
+        .cart{
+            cursor: pointer;
+            font-size:18px;
+            color: darkslategrey;
+        }
+        .cart:hover{
+            animation: bounce 2.5s infinite;
+        }
+        @keyframes bounce {
+            0%,  
+            100% {
+                transform: translateY(0);
+            }
+            50% {
+                transform: translateY(-5px);
+            }
+        }
+    </style>
+    <script>
+        var items = [{
+                title: "Blood Orange",
+                price: 8.50,
+                image: "images/Pro1.jpg",
+                amount: 1,
+                id: "6"
+            },{
+                title: "Peas Berry",
+                price: 8.50,
+                image: "images/Pro2.jpg",
+                amount: 1,
+                id: "7"
+            },
+            {
+                title: "Passion Fruit",
+                price: 8.50,
+                image: "images/Pro3.jpg",
+                amount: 1,
+                id: "8"
+            }
+        ]
+
+        $(function(){
+            for(let i = 1; i <= 3; i++){
+                $(`#love${i}`).on("click", function(){
+                    let temp_arr = [];
+
+                    if("wishlist" in localStorage){
+                        temp_arr = JSON.parse(localStorage.getItem("wishlist"));
+                    }
+
+                    let count = 1;
+
+                    let temp_item = items[i-1];
+                    let flag = false;
+                    // check duplicate
+                    if(temp_arr.length > 0){
+                        for(let i in temp_arr){
+                            if(temp_item.title === temp_arr[i].title){
+                                flag = true;
+                                temp_arr[i].amount += 1;
+                                count = temp_arr[i].amount;
+                            }
+                        }
+                    }
+
+                    if(!flag){
+                        temp_arr.push(temp_item);
+                    }
+
+                    if(typeof(Storage) != "undefined"){
+                        localStorage.setItem("wishlist", JSON.stringify(temp_arr));
+                        if("Notification" in window){
+                            if(Notification.permission == "granted"){
+                                var notification = new Notification(`There are currently ${count} ${temp_item.title} in the Wish List.`);
+                            }
+                        }
+                    }
+
+                });
+                $(`#cart${i}`).on("click", function(){
+                    let temp_arr = [];
+
+                    if("cart" in localStorage){
+                        temp_arr = JSON.parse(localStorage.getItem("cart"));
+                    }
+
+                    let temp_item = items[i-1];
+                    let flag = false;
+                    let count = 1;
+                    // check duplicate
+                    if(temp_arr.length > 0){
+                        for(let i in temp_arr){
+                            if(temp_item.title === temp_arr[i].title){
+                                flag = true;
+                                temp_arr[i].amount += 1;
+                                count = temp_arr[i].amount;
+                            }
+                        }
+                    }
+
+                    if(!flag){
+                        temp_arr.push(temp_item);
+                    }
+
+                    if(typeof(Storage) != "undefined"){
+                        localStorage.setItem("cart", JSON.stringify(temp_arr));
+                        if("Notification" in window){
+                            if(Notification.permission == 'granted'){
+                                var notification = new Notification(`There are currently ${count} ${temp_item.title} in the Shopping Cart.`)
+                            }
+                        }
+                    }
+                });
+            }
+        });
+    </script>
+</head>
+<body>
+
+    <section id="bar_flix">
+        <div class="container-fluid">
+            <nav class="navbar navbar-inverse">
+              <div class="container-fluid">
+                <ul class="nav navbar-nav" style="display: inline;">
+                  <li><a id="len1" class="hoverable" href="index.html">Home</a></li>
+                  <li><a id="len2" class="hoverable" href="index.html#sec2">About</a></li>
+                  <li><a id="len3" class="hoverable" href="product-details.html">Juices</a></li>
+                  <li><a id="len4" class="hoverable" href="index.html#contact">Contact</a></li>
+                  <li><a id="len5" class="hoverable" href="promotion.html">Promotions</a></li>
+                  <li><a id="len6" class="hoverable" href="new_product.html">New Products</a></li>
+                  <li><a id="len7" class="hoverable" href="wishlist.html">Wish List</a></li>
+                  <li><a id="len8" class="hoverable" href="cart.html">Cart</a></li>
+                </ul>
+              </div>
+            </nav>
+          </div>
+    </section>
+   
+    
+    <section class="juices"><div class="container">
+        <div class="card">
+            <div class="imgBx">
+                <img src="images/Pro1.jpg" id="img">
+            </div>
+            <div class="content">
+                <h2>Blood Orange</h2>
+                <p>Handpicked, loose leaf Assam black tea with Blood Orange fruit sauce for a refreshing twist.</p>
+                <p style="color: green;">RM 8.50</p>
+                <p class="love" id="love1">❤   Add to Wishlist</p>
+                    <p class="cart" id="cart1">🛒   Add to Cart</p>
+            </div>
+        </div>
+    </br></br></br></br></br></br></br></br></br></br>
+        <div class="card">
+            <div class="imgBx">
+                <img src="images/Pro2.jpg" id="img">
+            </div>
+            <div class="content">
+                <h2>Peas Berry</h2>
+                <p>Your choice of tea, sweetness or fruit infusion poured over ice for a crisp and refreshing taste</p>
+                <p style="color: green;">RM 8.50</p>
+                <p class="love" id="love2">❤   Add to Wishlist</p>
+                    <p class="cart" id="cart2">🛒   Add to Cart</p>
+            </div>
+        </div>
+    </br></br></br></br></br></br></br></br></br></br>
+        <div class="card">
+            <div class="imgBx">
+                <img src="images/Pro3.jpg" id="img">
+            </div>
+            <div class="content">
+                <h2>Passion Fruit</h2>
+                
+                <p>Black tea with bright, bold passion fruit flavor and a tart finish. Made with Assam tea.
+
+                    Also available as iced sweet tea.</p>
+                    <p style="color: green;">RM 8.50</p>
+                    <p class="love" id="love3">❤   Add to Wishlist</p>
+                    <p class="cart" id="cart3">🛒   Add to Cart</p>
+            </div>
+        </div>
+    </div></section>
+    <div>
+        </br>
+        <h1 id="name">Granita Tea Ice Blended</h1>
+    </div>
+    <a href="crush.html">Click me</a>
+</body>
+</html>

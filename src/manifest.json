@@ -1,0 +1,35 @@
+{
+    "name": "Fruit Havana",
+    "gcm_sender_id": "BEfgXXet01_92X9mDAd13IO43XeJfnH5Ybv3OnCANVRcK3EWfBLaSY8C6MX5l9ykQgyZYw7eka6XpPZMp30tq2U",
+    "theme_color": "#f69435",
+    "background_color": "#f69435",
+    "display": "minimal-ui",
+    "scope": "/",
+    "start_url": "/index.html",
+    "icons": [
+        {
+            "src": "images/icon-192x192.png",
+            "sizes": "192x",
+            "type": "image/png",
+            "purpose": "any maskable"
+        },
+        {
+            "src": "images/icon-256x256.png",
+            "sizes": "256x",
+            "type": "image/png"
+        },
+        {
+            "src": "images/icon-384x384.png",
+            "sizes": "384x",
+            "type": "image/png"
+        },
+        {
+            "src": "images/icon-512x512.png",
+            "sizes": "512x512",
+            "type": "image/png"
+        }
+    ],
+    "app_name": "fruitHavana",
+    "short_name": "fh",
+    "description": "halo"
+}

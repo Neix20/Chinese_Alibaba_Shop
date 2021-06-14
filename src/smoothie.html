@@ -1,0 +1,586 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" type="text/css" href="css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+    <link rel="stylesheet" href="css/nav_bar.css">
+    <script type="text/javascript" src="js/jquery-3.5.1.min.js"></script>
+    <script type="text/javascript" src="js/bootstrap.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.0.0/animate.min.css"/>
+    <script src="https://js.api.here.com/v3/3.1/mapsjs-core.js"></script>
+    <script src="https://js.api.here.com/v3/3.1/mapsjs-service.js"></script>
+    <script src="https://js.api.here.com/v3/3.1/mapsjs-ui.js"></script>
+    <script src="https://js.api.here.com/v3/3.1/mapsjs-mapevents.js"></script>
+    <link rel="stylesheet" href="css/weather.css">
+    <style>
+        header {
+            background-size: cover;
+            background: url(images/strawberry_cover.jpg) no-repeat center center fixed;
+            height: 100vh;
+            width: 100%;
+        }
+
+        .bar{
+            margin:0 auto;
+            width:600px;
+            border-radius:30px;
+            border:1px solid #dcdcdc;
+        }
+
+        .bar:hover{
+            box-shadow: 1px 1px 8px 1px #dcdcdc;
+        }
+
+        .bar:focus-within{
+            box-shadow: 1px 1px 8px 1px #dcdcdc;
+            outline:none;
+        }
+
+        .searchbar{
+            margin-left: 20px;
+            height:45px;
+            border:none;
+            width: 450px;
+            font-size:16px;
+            outline: none;
+        }
+
+        .search_icon{
+            height:20px;
+            position:relative;
+            left: 30px;
+            bottom: 1px;
+        }
+        .break {
+            height: 50px;
+        }
+        .card {
+            text-align:center;
+            position: absolute;
+            width: 250px;
+            height: 350px;
+            margin-top: 10px;
+            margin-bottom: 10px;
+            animation: animate 1s linear infinite;
+            transition:.6s;
+  
+            transform: rotatex(75deg) translatey(-200px) translatez(-100px);
+            box-shadow: 0px 20px 60px rgba(0, 0, 0, 0.5);
+        }
+
+        .card:hover{
+            transform: rotatex(0deg);
+            transition:.6s;
+            box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.3);
+        }
+
+        .card img{
+            transform: translateY(15px);
+            width:180px;
+            height:150px;
+            border-radius: 50%;
+        }
+
+        .sp {
+            -webkit-transform: perspective(900px);
+            -webkit-transform-style: preserve-3d;
+        }
+
+        .portfolio-box-inner {display: block;position: relative;margin: auto;overflow: hidden;height: 100%; width: 100%;}
+        .portfolio-box{margin-bottom: 30px}
+
+        .portfolio-box .portfolio-box-caption {display: block;position: absolute;bottom: 0;width: 100%;height: 100%;color: #fff;-webkit-transition: all .35s;-moz-transition: all .35s;transition: all .35s;}
+        .portfolio-box .portfolio-box-caption .product-price {position: absolute;top: 20px;left: 35px;opacity: 0;-webkit-transition: all .35s;-moz-transition: all .35s;transition: all .35s;font-size: 25px;font-weight: 300;}
+        .portfolio-box .portfolio-box-caption .product-price sup{margin-left: 3px;font-size: 18px;}
+        .portfolio-box .portfolio-box-caption .portfolio-box-description {position: absolute;bottom: 30px;left: 35px;max-width: 210px;}
+        .portfolio-box .portfolio-box-caption .portfolio-box-description .product-category,
+        .portfolio-box .portfolio-box-caption .portfolio-box-description .product-name {text-transform: uppercase;font-weight: 600;letter-spacing: 2px;-webkit-transition: all .35s;-moz-transition: all .35s;transition: all .35s;opacity:0}
+        .portfolio-box .portfolio-box-caption .portfolio-box-description .product-category {font-size: 13px;color: #FF9E22;margin-left: 25px;}
+        .portfolio-box .portfolio-box-caption .portfolio-box-description .product-name {font-size: 16px;margin-left: -100px;color: #fff;}
+
+        .portfolio-box:hover .portfolio-box-caption {background: rgba(0, 0, 0,.5);}
+
+        .portfolio-box:hover .portfolio-box-caption .product-price,
+        .portfolio-box:hover .portfolio-box-caption .portfolio-box-description .product-category,
+        .portfolio-box:hover .portfolio-box-caption .portfolio-box-description .product-name{margin-left: 0;opacity: 1}
+
+        .icon_w{
+            width: 80%;
+        }
+
+        .side_tab {
+            z-index: 4;
+            position: fixed;
+            text-align: center;
+            -webkit-transform: rotate(90deg);
+            -ms-transform: rotate(90deg);
+            transform: rotate(90deg);
+        }
+
+        .side_tab:hover{
+            cursor: pointer;
+        }
+
+        .side_tab_table {
+            background-color: white;
+            height: 300px;
+            width: 400px;
+            border-radius: 50px;
+            position: fixed;
+            z-index: 5;
+        }
+
+        .section_1_half{
+            background-size: cover;
+            background: url(images/blueberry.jpg) no-repeat center center fixed;
+            height: 100vh;
+            width: 100%;
+        }
+
+        .section_2_half{
+            background-size: cover;
+            background: url(images/raspberry.jpg) no-repeat center center fixed;
+            height: 100vh;
+            width: 100%;
+        }
+
+        .section_3_half{
+            background-size: cover;
+            background: url(images/mountain_bg.jpg) no-repeat center center fixed;
+            height: 100vh;
+            width: 100%;
+        }
+    </style>
+    <script>
+        var image_link_1 = "https://img.icons8.com/fluent/48/000000/user-location.png"
+        var image_link_2 = "https://img.icons8.com/ios-filled/50/000000/next-location.png"
+
+        var stall_location = [
+            {
+                lat: 4.4721,
+                lon: 101.0412,
+                place: "Batu Gajah"
+            },
+            {
+                lat: 4.5975,
+                lon: 101.0901,
+                place: "Ipoh"
+            },
+            {
+                lat: 4.3085,
+                lon: 101.1537,
+                place: "Kampar"
+            },
+            {
+                lat: 4.1977,
+                lon: 101.2615,
+                place: "Tapah"
+            },
+            {
+                lat: 4.0224,
+                lon: 101.0206,
+                place: "Teluk Intan"
+            },
+            {
+                lat: 4.7736,
+                lon: 100.9420,
+                place: "Kuala Kangsar"
+            },
+            {
+                lat: 4.2363,
+                lon: 100.6322,
+                place: "Lumut"
+            },
+        ]
+
+   function createMarker(map, latitude, longitude, image_link){
+       //2.Add Markers
+       var LocationOfMarker = { lat: latitude, lng: longitude };
+       // Create a marker icon from an image URL:
+       var defaultIcon = new H.map.Icon(`${image_link}`, {size: {w: 56, h: 56}});
+       // Create a marker using the previously instantiated icon:
+       var marker = new H.map.Marker(LocationOfMarker, { icon: defaultIcon });
+
+       // Add the marker to the map:
+       map.addObject(marker);
+
+       map.setCenter(LocationOfMarker);
+     }
+   function createMap(class_id, api_key, latitude, longitude, target_latitude, target_longitude, zoom_ratio){
+     const platform = new H.service.Platform({ apikey: api_key });
+     const defaultLayers = platform.createDefaultLayers();
+     const map = new H.Map(document.getElementById(class_id),
+         defaultLayers.vector.normal.map, {
+         center: { lat: latitude, lng: longitude },
+         zoom: zoom_ratio,
+         pixelRatio: window.devicePixelRatio || 1
+     });
+
+     // This adds a resize listener to make sure that the map occupies the whole container
+     window.addEventListener('resize', () => map.getViewPort().resize());
+
+     //Step 3: make the map interactive
+     // MapEvents enables the event system
+     // Behavior implements default interactions for pan/zoom (also on mobile touch environments)
+     const behavior = new H.mapevents.Behavior(new H.mapevents.MapEvents(map));
+
+     // Create the default UI components
+     const ui = H.ui.UI.createDefault(map, defaultLayers);
+
+     createMarker(map, latitude, longitude, image_link_1);
+     createMarker(map, target_latitude, target_longitude, image_link_2);
+
+     const request = {
+         mode: "fastest;car;traffic:enabled",
+         waypoint0: `geo!${latitude},${longitude}`,
+         waypoint1: `geo!${target_latitude},${target_longitude}`,
+         representation: 'display',
+         routeAttributes: "summary"
+      };
+      //Initialize routing service
+      const router = platform.getRoutingService();
+      router.calculateRoute(request, response => {
+         //Parse the route's shape
+         const shape = response.response.route[0].shape.map(x => x.split(','));
+         const linestring = new H.geo.LineString();
+         shape.forEach(s => linestring.pushLatLngAlt(s[0], s[1]));
+         //Create a polyline with the shape
+         const routeLine = new H.map.Polyline(linestring, {
+            style: { strokeColor: 'blue', lineWidth: 3 }
+         });
+         //Add route to map
+         map.addObject(routeLine);
+         //Zoom to bounds of the route shape
+         map.getViewModel().setLookAtData({ bounds: routeLine.getBoundingBox() });
+
+         var d = new Date();
+         let str = `Today's Store Location is ${stall_location[d.getDay()].place}. The distance between you and the stall is ${response.response.route[0].summary.distance}KM.`
+         $("#dist").html(str);
+      });
+   }
+        function add_animation_sidebar(e,c_str, str,inner_str, flag){
+            if($(e.target).hasClass(inner_str)){
+                return flag;
+            }
+            if(e.target.id == c_str){
+                if(!flag){
+                    $(str).removeClass("animate__animated animate__bounceOutLeft");
+                }
+                    $(str).css("display","");
+                    $(str).addClass("animate__animated animate__bounceInLeft");
+            } else {
+                $(str).addClass("animate__animated animate__bounceOutLeft");
+                flag = false;
+            }
+            return flag;
+        }
+        
+        $(function() {
+            var flag = true, flag2 = true, flag3=true;
+            $(document).on("click", e=>{
+                flag = add_animation_sidebar(e,"side1","#side_1","temp_weather", flag);
+                flag2 = add_animation_sidebar(e,"side2","#side_2","n", flag2);
+                // flag3 = add_animation_sidebar(e, "side3", "#side_3","n", flag3);
+            });
+
+            $("#srch").keyup(function(){
+                let temp_arr = $(".tmp_a");
+                var filter = $("#srch").val().toUpperCase();
+                for(let i = 0; i < temp_arr.length; i++){
+                   let search = temp_arr[i].id;
+                   if(search.toUpperCase().indexOf(filter) > -1){
+                    $(`#${temp_arr[i].id}`).css("display","");
+                   }else{
+                    $(`#${temp_arr[i].id}`).css("display","none");
+                   }
+                }
+            });
+
+            var api_key_here_map = 'fbrrFZ440Xymdr9RXt6lviz8RztTYRUo6YGsXqDPI_Q';
+
+            var d = new Date();
+
+            navigator.geolocation.getCurrentPosition(function(pos){
+                createMap("map",api_key_here_map,pos.coords.latitude,pos.coords.longitude,stall_location[d.getDay()].lat,stall_location[d.getDay()].lon,17);
+                getWeather(pos.coords.latitude, pos.coords.longitude);
+            });
+        });
+    </script>
+</head>
+<body style="background-color: white;">
+    <section id="bar_flix">
+        <div class="container-fluid">
+            <nav class="navbar navbar-inverse">
+              <div class="container-fluid">
+                <ul class="nav navbar-nav" style="display: inline;">
+                  <li><a id="len1" class="hoverable" href="index.html">Home</a></li>
+                  <li><a id="len2" class="hoverable" href="index.html#sec2">About</a></li>
+                  <li><a id="len3" class="hoverable" href="product-details.html">Juices</a></li>
+                  <li><a id="len4" class="hoverable" href="index.html#contact">Contact</a></li>
+                  <li><a id="len5" class="hoverable" href="promotion.html">Promotions</a></li>
+                  <li><a id="len6" class="hoverable" href="new_product.html">New Products</a></li>
+                  <li><a id="len7" class="hoverable" href="wishlist.html">Wish List</a></li>
+                  <li><a id="len8" class="hoverable" href="cart.html">Cart</a></li>
+                </ul>
+              </div>
+            </nav>
+          </div>
+    </section>
+    <!--side tab-->
+    <div class="side_tab" style="top: 20%;">
+        <div class="btn btn-outline-primary" id="side1">
+            Weather
+        </div>
+    </div>
+
+    <div class="side_tab" style="top: 50%;">
+        <div class="btn btn-outline-primary" id="side2">
+            Videos
+        </div>
+    </div>
+
+    <!-- <div class="side_tab" style="top: 80%;">
+        <div class="btn btn-outline-primary" id="side3">
+            Charts
+        </div>
+    </div> -->
+
+    <div id="side_1" class="border border-outline-dark side_tab_table" style="display: none; top: 5%; height: 400px;">
+        <table class="table">
+            <thead class="thead-dark">
+                <tr><th>Weather Tracker</th></tr>
+            </thead>
+            <tbody>
+                <tr><td><div class="notification"></div></td></tr>
+                <tr>
+                    <td>
+                        <div class="weather-icon">
+                            <img src="images/icons/unknown.png" alt="">
+                        </div>
+                        <div class="temperature-value" style="margin-bottom: 10px;">
+                            <p class="temp_weather">- °<span class="temp_weather">C</span></p>
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <div class="temperature-description">
+                            <p> - </p>
+                        </div>
+                        <div class="location">
+                            <p>-</p>
+                        </div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <script src="js/weather_app.js"></script>
+
+    <div id="side_2" class="border border-outline-dark side_tab_table" style="display: none; top: 35%;">
+        <table class="table">
+            <thead class="thead-dark">
+                <tr><th>Video</th></tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td> 
+                        <video width="320" height="240" controls>
+                        <source src="videos/txe_video.mp4" type="video/mp4">
+                      </video>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <!-- <div id="side_3" class="border border-outline-dark side_tab_table" style="display: none; top: 65%;">
+        <table class="table">
+            <thead class="thead-dark">
+                <tr><th>Google Charts</th></tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>Hi Siow Poo</td>
+                </tr>
+            </tbody>
+        </table>
+    </div> -->
+
+    <header>
+        <div class="d-flex align-items-center  justify-content-center h-100">
+            <div class="text-center animate__animated animate__heartBeat" style="width: 800px; height: 200px; background-color:purple;" id="bg-1">
+                <h1 style="color: white; font-family:Arial, Helvetica, sans-serif; font-size: 1000%;">Smoothie</h1>
+            </div>
+        </div>
+    </header>
+
+    <div class="section_1 py-5">
+        <div class="d-flex align-items-center justify-content-center">
+            <div style="padding: 30px 200px;width: 1200px; background-color: purple; border-radius: 50px;">
+                <div>
+                    <div class="text-center">
+                        <h1 style="color: white; font-family:Arial, Helvetica, sans-serif;">Search Bar</h1>
+                    </div>
+                    <div class="text-center py-4" style="height: 100px;width: 800px;">
+                        <div class="bar" style="background-color: white;">
+                            <input class="searchbar" type="text" title="Search" id="srch">
+                            <img class="search_icon" src="images/search.png" title="Search!">
+                        </div>
+                    </div>
+                    <div class="d-flex align-items-center justify-content-center">
+                        <div style="padding: 25px;height: 400px; width: 800px;  background-color: rgb(226, 8, 255); border-radius: 50px;">
+                            <div class="text-center" style="height: 350px; width: 750px;color: white;">
+                                <span style="font-size: 300%">What are you looking for?</span>
+                                <div class="text-center btn btn-primary tmp_a" id="strawberry_sucks" style="height: 100px; width: 700px; font-size: 400%; display: none"><a href="smoothie_1.html" style="color: white;">Strawberry Sucks</a></div>
+                                <div class="text-center btn btn-primary tmp_a" id="blueberry_sucks" style="height: 100px; width: 700px; font-size: 400%; display: none"><a href="smoothie_2.html" style="color: white;">Blueberry Sucks</a></div>
+                                <div class="text-center btn btn-primary tmp_a" id="raspberry_sucks" style="height: 100px; width: 700px; font-size: 400%; display: none"><a href="smoothie_3.html" style="color: white;">Raspberry Sucks</a></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="section_1_half">
+        <div class="d-flex align-items-center  justify-content-center h-100">
+            <div class="text-center animate__animated animate__heartBeat" style="width: 800px; height: 200px; background-color:green;" id="bg-1">
+                <h1 style="color: white; font-family:Arial, Helvetica, sans-serif; font-size: 1000%;">Best Seller</h1>
+            </div>
+        </div>
+    </div>
+
+    <div class="section_2 py-5">
+        <div class="d-flex align-items-center justify-content-center">
+            <div style="height: 450px; width: 1400px; border-radius: 50px; background-color: green;">
+                <div class="text-center">
+                    <h1 style="color: white; font-family:Arial, Helvetica, sans-serif;">Best Sell</h1>
+                </div>
+                <div class="d-flex align-items-center justify-content-center">
+                    <div style="height: 300px; width: 1300px; border-radius: 50px;">
+                        <div class="sp col-11">
+                            <div class="card" style="left: 100px;">
+                                <div class="d-flex align-items-center justify-content-center">
+                                    <div>
+                                        <a href="smoothie_1.html"><img src="images/g_smoothie.jpg" alt=""></a>
+                                        <div style="height: 20px;"></div>
+                                        <a href="smoothie_1.html" style="color:black;"><h3>Strawberry</h3></a>
+                                        <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Error quis vitae distinctio ea est eos incidunt odio repellendus, at blanditiis.</p>
+                                    </div>
+                                </div>
+                            </div>
+                        
+                            <div class="card" style="left: 550px;">
+                                <div class="d-flex align-items-center justify-content-center">
+                                    <div>
+                                        <a href="smoothie_2.html"><img src="images/blueberry.jpg" alt=""></a>
+                                        <div style="height: 20px;"></div>
+                                        <a href="smoothie_1.html" style="color:black;"><h3>Blueberry</h3></a>
+                                        <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Error quis vitae distinctio ea est eos incidunt odio repellendus, at blanditiis.</p>
+                                    </div>
+                                </div>
+                            </div>
+                        
+                            <div class="card" style="left: 1000px;">
+                                <div class="d-flex align-items-center justify-content-center">
+                                    <div>
+                                        <a href="smoothie_3.html"><img src="images/raspberry.jpg" alt=""></a>
+                                        <div style="height: 20px;"></div>
+                                        <a href="smoothie_1.html" style="color:black;"><h3>Raspberry</h3></a>
+                                        <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Error quis vitae distinctio ea est eos incidunt odio repellendus, at blanditiis.</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="section_2_half">
+        <div class="d-flex align-items-center  justify-content-center h-100">
+            <div class="text-center animate__animated animate__heartBeat" style="width: 800px; height: 200px; background-color:red;" id="bg-1">
+                <h1 style="color: white; font-family:Arial, Helvetica, sans-serif; font-size: 1000%;">Menu</h1>
+            </div>
+        </div>
+    </div>
+
+    <div class="section_3 py-5">
+        <div class="d-flex align-items-center justify-content-center">
+            <div style="background-color: orangered;width: 1200px;border-radius: 50px;">
+                <div class="text-center">
+                    <h1 style="color: white; font-family:Arial, Helvetica, sans-serif;">All Products</h1>
+                </div>
+                <div class="d-flex p-4">
+                    <div class="portfolio-box col-4">
+                        <div class="portfolio-box-inner">
+                            <img src="images/g_smoothie.jpg" class="img-responsive icon_w" alt="">
+                            <div class="portfolio-box-caption" style="width: 80%;">
+                                <p class="product-price">RM29<sup>.00</sup></p>
+                                <div class="portfolio-box-description">
+                                    <a href="smoothie_1.html"><h3 class="product-name">Strawberry Smoothie</h3></a>
+                                    <p class="product-category">Quantity: 12</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="portfolio-box col-4">
+                        <div class="portfolio-box-inner">
+                            <img src="images/blueberry.jpg" class="img-responsive icon_w" alt="">
+                            <div class="portfolio-box-caption" style="width: 80%;">
+                                <p class="product-price">RM29<sup>.00</sup></p>
+                                <div class="portfolio-box-description">
+                                    <a href="smoothie_2.html"><h3 class="product-name">Blueberry Smoothie</h3></a>
+                                    <p class="product-category">Quantity: 12</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="portfolio-box col-4">
+                        <div class="portfolio-box-inner">
+                            <img src="images/raspberry.jpg" class="img-responsive icon_w" alt="">
+                            <div class="portfolio-box-caption" style="width: 80%;">
+                                <p class="product-price">RM29<sup>.00</sup></p>
+                                <div class="portfolio-box-description">
+                                    <a href="smoothie_3.html"><h3 class="product-name">Raspberry Smoothie</h3></a>
+                                    <p class="product-category">Quantity: 12</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="section_3_half">
+        <div class="d-flex align-items-center  justify-content-center h-100">
+            <div class="text-center animate__animated animate__heartBeat" style="width: 800px; height: 200px; background-color:black;" id="bg-1">
+                <h1 style="color: white; font-family:Arial, Helvetica, sans-serif; font-size: 1000%;">Maps</h1>
+            </div>
+        </div>
+    </div>
+
+    <div class="section_4 py-5">
+        <div class="d-flex align-items-center justify-content-center">
+            <div style="padding: 25px 25px;width: 1200px; background-color: black; border-radius: 50px;">
+                <div>
+                    <div class="text-center">
+                        <h1 style="color: white; font-family:Arial, Helvetica, sans-serif;">Store Locator</h1>
+                    </div>
+                    <div id="map" style="height: 450px;"></div>
+                    <div style="color: white;" id="tracker">
+                        <span id="dist" style="font-size: 150%;"></span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

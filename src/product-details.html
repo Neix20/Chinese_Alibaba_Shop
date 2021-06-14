@@ -1,0 +1,571 @@
+<!DOCTYPE html>
+<html lang="zxx">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Main Product Page</title>
+
+    <!-- Google Font -->
+    <link href="https://fonts.googleapis.com/css2?family=Cookie&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800;900&display=swap"
+    rel="stylesheet">
+  
+    <link rel="stylesheet" href="css/bootstrap.min.css" type="text/css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" type="text/css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.0/jquery.min.js" type="text/css">
+    <link rel="stylesheet" href="css/font-awesome.min.css" type="text/css">
+    <link rel="stylesheet" href="css/elegant-icons.css" type="text/css">
+    <link rel="stylesheet" href="css/jquery-ui.min.css" type="text/css">
+    <link rel="stylesheet" href="css/magnific-popup.css" type="text/css">
+    <link rel="stylesheet" href="css/owl.carousel.min.css" type="text/css">
+    <link rel="stylesheet" href="css/slicknav.min.css" type="text/css">
+    <link rel="stylesheet" href="css/style.css" type="text/css">
+    
+    <style>
+            *{
+            margin : 0;
+            padding : 0;
+            text-decoration: none;
+            max-width: 1920px;;
+            }
+
+            #rd{
+                position: relative;
+                bottom: 150px;
+            }
+
+            body{
+              font-family: 'Open Sans', sans-serif;
+              font-size: 14px;
+              font-weight: 400;
+              line-height: 20px;
+            }
+            .container {
+              width: 100%;
+              max-width: 1440px;
+              margin: 0 auto;
+              padding: 0 15px;
+            }
+            .header-area {
+              background: linear-gradient(rgba(0,0,0,.3), rgba(0,0,0,.5)),
+              url(images/jw_bg.jpg);
+              background-position: center center;
+              background-size: cover;
+              height:450px;
+              width: 100%;
+            }
+            .navbar-area {
+              background: rgba(0,0,0,.6);
+              border-bottom: 1px solid #000;
+            }
+            .site-navbar {
+              display: flex;
+              justify-content: space-between;
+              align-items: center;
+            }
+            a.site-logo {
+              font-size: 26px;
+              font-weight: 800;
+              text-transform: uppercase;
+              color: #fff;
+              text-decoration: none;
+              position: relative;
+            }
+            .site-navbar ul {
+              margin: 0;
+              padding: 0;
+              list-style: none;
+              display: flex;
+            }
+            .site-navbar ul li a {
+              color: #fff;
+              padding: 20px;
+              display: block;
+              text-decoration: none;
+              text-transform: uppercase;
+            }
+            .site-navbar ul li a:hover {
+              background: rgba(255,255,255,.1);
+            }
+            .nav-toggler {
+              border: 3px solid #fff;
+              padding: 5px;
+              background-color: transparent;
+              cursor: pointer;
+              height: 39px;
+              display: none;
+            }
+            .nav-toggler span, 
+            .nav-toggler span:before, 
+            .nav-toggler span:after {
+              width: 28px;
+              height: 3px;
+              background-color: #fff;
+              display: block;
+              transition: .3s;
+            }
+            .nav-toggler span:before {
+              content: '';
+              transform: translateY(-9px);
+            }
+            .nav-toggler span:after {
+              content: '';
+              transform: translateY(6px);
+            }
+            .nav-toggler.toggler-open span {
+              background-color: transparent;
+            }
+            .nav-toggler.toggler-open span:before {
+              transform: translateY(0px) rotate(45deg);
+            }
+            .nav-toggler.toggler-open span:after {
+              transform: translateY(-3px) rotate(-45deg);
+            }
+            .intro-area {
+              height: 400px;
+              display: flex;
+              align-items: center;
+              text-align: center;
+              color: #fff;
+            }
+            .intro-area h2 {
+              font-size: 50px;
+              font-weight: 300;
+              line-height: 50px;
+              margin-bottom: 25px;
+            }
+            .intro-area p {
+              font-size: 18px;
+            }
+            #logoss{
+              background-color:whitesmoke;
+            }
+
+            @media screen and (max-width: 767px) {
+              .container {
+                max-width: 720px;
+              }
+              .nav-toggler{
+                display: block;
+              }
+              .site-navbar {
+                min-height: 60px;
+              }
+              .site-navbar ul {
+                position: absolute;
+                width: 100%;
+                height: calc(100vh - 60px);
+                left: 0;
+                top: 60px;
+                flex-direction: column;
+                align-items: center;
+                border-top: 1px solid #444;
+                background-color: rgba(0,0,0,.75);
+                max-height: 0;
+                overflow: hidden;
+                transition: .3s;
+              }
+              .site-navbar ul li {
+                width: 100%;
+                text-align: center;
+              }
+              .site-navbar ul li a {
+                padding: 25px;
+              }
+              .site-navbar ul li a:hover {
+                background-color: rgba(255,255,255,.1);
+              }
+              .site-navbar ul.open {
+                max-height: 100vh;
+                overflow: visible;
+              }
+              .intro-area h2 {
+                font-size: 36px;
+                margin-bottom: 15px;
+              }  
+              a.site-logo {
+                font-size: 26px;
+                font-weight: 800;
+                text-transform: uppercase;
+                color: #fff;
+                text-decoration: none;
+                position: relative;
+                right:0px;;
+              }
+   
+            }
+            .middle{
+                position: relative;
+                margin: 20px;
+                top: 50%;
+                left: 50%;
+                transform: translate(-50%,-50%);
+            }
+            
+            .card{
+                cursor: pointer;
+                width: 300px;
+                height: 360px;
+            }
+            
+            .front,.back{
+                width: 100%;
+                height: 100%;
+                overflow: hidden;
+                backface-visibility: hidden;
+                position: absolute;
+                transition: transform .6s linear;
+            }
+            
+            .front img{
+                height: 100%;
+            }
+            
+            .front{
+                transform: perspective(600px) rotateY(0deg);
+            }
+            
+            .back{
+                background: #f1f1f1;
+                transform: perspective(600px) rotateY(180deg);
+            }
+            
+            .back-content{
+                color: #2c3e50;
+                text-align: center;
+                width: 100%;
+            }
+            
+            .card:hover > .front{
+                transform: perspective(600px) rotateY(-180deg);
+            }
+            .card:hover > .back{
+                transform: perspective(600px) rotateY(0deg);
+            }
+            
+            .recommend{
+                display: flex;
+                flex-direction: row;
+                margin: 50px;
+                text-align: center;
+                position: relative;
+                top: 150px;
+                right: 530px;
+            }
+            
+            @media(max-width:885px){
+                .recommend{
+                    flex-direction: column;  
+                }
+            }
+            
+            #weather{
+                margin: 80px;
+                margin-top: 120px;
+                background-color: thistle;
+                font-family: "Rimouski";
+            }
+            
+            #weather .container{
+                width: 300px;    
+                display: block;
+                margin: 0 auto;
+                
+                border-radius: 10px;
+                padding-bottom : 50px;
+            }
+            
+            .app-title{
+                width: 300px;
+                height: 50px;
+                border-radius: 10px 10px 0 0;
+            }
+            
+            .app-title p{
+                text-align: center;
+                padding: 15px;
+                margin: 0 auto;
+                font-size: 1.2em;
+                color: #293251;
+            }
+            
+            .notification{
+                background-color: #f8d7da;
+                display: none;
+            }
+            
+            .notification p{
+                color: #721c24;
+                font-size: 1.2em;
+                margin: 0;
+                text-align: center;
+                padding: 10px 0;
+            }
+            
+            .weather-container{
+                width: 300px;
+                height: 260px;
+            }
+            
+            .weather-icon{
+                width: 300px;
+                height: 128px;
+            }
+            
+            .weather-icon img{
+                display: block;
+                margin: 0 auto;
+            }
+            
+            .temperature-value{
+                width: 300px;
+                height:60px;
+            }
+            
+            .temperature-value p{
+                padding: 0;
+                margin: 0;
+                color: #293251;
+                font-size: 4em;
+                text-align: center;
+                cursor: pointer;
+            }         
+            .temperature-value span{
+                color: #293251;
+                font-size: 0.5em;
+            }
+            .temperature-description p{
+                padding: 8px;
+                margin: 0;
+                color: #293251;
+                text-align: center;
+                font-size: 1.2em;
+            }
+            
+            .location p{
+                margin: 0;
+                padding: 0;
+                color: #293251;
+                text-align: center;
+                font-size: 0.8em;
+            }
+            
+            .footer__widget{
+                position: relative;
+                left:50px;  
+                display:flex;
+                flex-direction: row;
+            }
+            .footer{
+                display:flex;
+                flex-direction: column;
+            }
+            #youtube{
+                position:relative;
+                left:350px;
+            }
+            #map{
+                width:600px;
+            }
+            .instagram{
+                margin:50px;   
+            }       
+    </style>
+</head>
+
+<body>
+    <header class="header-area">
+        <div class="navbar-area">
+          <div class="container">
+            <nav class="site-navbar">
+              <img id="logoss" src="images/logo.png" width=60px height=60px>
+              <a href="index.html" class="site-logo">FRUIT HAVANA</a>
+              <ul>
+                <li><a href="index.html">HOME</a></li>
+                <li><a href="index.html#sec2">ABOUT</a></li>
+                <li><a href="product-details.html">JUICES</a></li>
+                <li><a href="index.html#contact">CONTACT</a></li>
+                <li><a href="promotion.html">PROMOTIONS</a></li>
+                <li><a href="cart.html">CART</a></li>
+              </ul>
+    
+              <button class="nav-toggler">
+                <span></span>
+              </button>
+            </nav>
+          </div>
+        </div>
+      
+        <div class="intro-area">
+          <div class="container">
+            <h2 style="color:white">MAIN PRODUCTS</h2>
+            <p style="color:white">Check out our latest Gratina iced tea blended, tasty blended juices, yummy smoothies and shiok crushed juices!</p>
+          </div>
+        </div>
+      </header>
+          
+    <!-- Instagram Begin -->
+    <section id="cate">
+        <div class="instagram">
+            <div class="container-fluid">
+                <div class="d-flex">
+                    <div class="col-3">
+                        <div class="instagram__item set-bg" data-setbg="https://kitskitchen.com/wp-content/uploads/2018/08/blenderjuices1.jpg">
+                            <div class="instagram__text">
+                                <a href="juice.html"><h3>Blended Juice</h3></a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-3">
+                        <div class="instagram__item set-bg" data-setbg="https://wholefully.com/wp-content/uploads/2019/04/no-banana-smoothies_972x1272_acf_cropped-735x962.jpg">
+                            <div class="instagram__text">
+                                <a href="smoothie.html"><h3>Smoothies</h3></a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-3">
+                        <div class="instagram__item set-bg" data-setbg="https://www.boostjuicebars.com.my/wp-content/uploads/2017/02/Berry-Crush_cup.png">
+                            <div class="instagram__text">
+                                <a href="crush.html"><h3>Crushed Juice</h3></a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-3">
+                        <div class="instagram__item set-bg" data-setbg="https://www.12fly.com.my/images/lifestyle/Food/2016/april/coffee-bean/granita-tea-ice-blended-trio_with-text.jpg">
+                            <div class="instagram__text">
+                                <a href="blended.html"><h3>Granita Tea Ice Blended</h3></a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Instagram End -->
+
+    <!-- weather api Starts-->
+    <section id="weather" style="border-radius: 50px;">
+        <div class="d-flex align-items-center justify-content-center">
+            <div class="text-center m-5">
+                <div class="related__title">
+                    <h5>RECOMMENDED DRINKS FOR YOU TODAY</h5>
+                    <h6>Trying out our weather api!</h6>
+                    <div class = "container">
+                        <div class = "app-title">
+                            <p>Weather</p>
+                        </div>
+                        <div class = "notification"></div>
+                        <div class = "weather-container">
+                            <div class = "weather-icon">
+                                <img scr = icons/unknown.png"></div>
+                            <div class = "temperature-value">
+                                <p>- °<span>C</span></p></div>
+                            <div class = "temperature-description"><p> - </p></div>
+                            <div class = "location"><p> - </p></div>
+                        </div>
+                    </div>
+                    <script src = "js/api.js"></script>
+                    <!-- flip cards -->
+                    <!--Will fix this shit later-->
+                <div class = "recommend" id = "rd">
+                <div class = "card middle">
+                <div class = "front">
+                <img src = "icons/01d.png" alt="Sunny day">
+                </div>
+                <div class = "back">
+                <div class = "back-content middle">
+                  <h2>Blood Orange</h2>
+                  <span>Granita Tea Ice Blended</span>            
+                </div>
+                </div>
+                </div>
+                <div class = "card middle">
+                <div class = "front">
+                <img src = "icons/02d.png" alt="Sunny day">
+                </div>
+                <div class = "back">
+                <div class = "back-content middle">
+                  <h2>Watermelon Lychee Crush</h2>
+                  <span>Crushed Juice</span>
+                </div>
+                </div>
+                </div>
+                <div class = "card middle">
+                <div class = "front">
+                <img src = "icons/03d.png" alt="Sunny day">
+                </div>
+                <div class = "back">
+                <div class = "back-content middle">
+                  <h2>Blueberry Sucks</h2>
+                  <span>Smoothies</span>
+                </div>
+                </div>
+                </div>
+                <div class = "card middle">
+                <div class = "front">
+                <img src = "icons/04d.png" alt="Sunny day">
+                </div>
+                <div class = "back">
+                <div class = "back-content middle">
+                  <h2>Orange Juice</h2>
+                  <span>Blended Juice</span>
+                </div>
+                </div>
+                </div>
+                </div>
+                </div>
+                </div>
+        </div>
+    </section>
+    <!-- weather api Ends -->
+
+    
+    <!-- Footer Section Begin -->
+    <footer class="footer">
+        <div class="container">
+            <div class="d-flex">
+                <div class="col-lg-4 col-md-6 col-sm-7">
+                    <div class="footer__widget" id="map">
+                        <h6>Our location</h6>
+                        <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3978.468346131869!2d101.12349911404125!3d4.322763896858033!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x31cae284938190e3%3A0xf7e25a93c383889a!2sDisney%20Ave%2C%2031900%20Kampar%2C%20Perak!5e0!3m2!1sen!2smy!4v1599769676956!5m2!1sen!2smy" width="600px" height="450px" frameborder="0" style="border:0;" allowfullscreen="" aria-hidden="false" tabindex="0"></iframe>
+                    </div>
+                </div>
+                
+                <div class="col-lg-4 col-md-8 col-sm-8">
+                    <div class="footer__widget" id="youtube">
+                            <h6>FRUIT SMOOTHIES NUTRITION</h6>
+                            <iframe width="560" height="315" src="https://www.youtube.com/embed/OklC_c3QyyU" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="d-flex">
+                <div class="col-lg-12">
+                    <div class="footer_copyright_text">
+                        <p>Copyright &copy; <script>document.write(new Date().getFullYear());</script> All rights reserved <i class="fa fa-heart" aria-hidden="true"></i> by <a href="homepage.html" target="_blank">Fruit Havana</a></p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </footer>
+    <!-- Footer Section End -->
+
+    <!-- Js Plugins -->
+    <script src="js/jquery-3.3.1.min.js"></script>
+    <script src="js/bootstrap.min.js"></script>
+    <script src="js/jquery.magnific-popup.min.js"></script>
+    <script src="js/jquery-ui.min.js"></script>
+    <script src="js/mixitup.min.js"></script>
+    <script src="js/jquery.countdown.min.js"></script>
+    <script src="js/jquery.slicknav.js"></script>
+    <script src="js/owl.carousel.min.js"></script>
+    <script src="js/jquery.nicescroll.min.js"></script>
+    <script src="js/main.js"></script>
+    <script src="https://apps.elfsight.com/p/platform.js" defer></script>
+    <div class="elfsight-app-010f4384-ebf7-431d-b5ea-4bab99a17eb2"></div>
+</body>
+</html>

@@ -1,0 +1,16 @@
+{
+  "name": "fruit_havanna",
+  "version": "2.0.0",
+  "description": "",
+  "main": "sw.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {},
+  "devDependencies": {
+    "express": "^4.16.2",
+    "web-push": "^3.2.5"
+  }
+}

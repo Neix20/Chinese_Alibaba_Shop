@@ -1,0 +1,372 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+
+    <link rel="manifest" href="manifest.json">
+
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="application-name" content="Fruit Havana">
+    <meta name="apple-mobile-web-app-title" content="Fruit Havana">
+    <meta name="theme-color" content="#f69435">
+
+    <meta name="msapplication-navbutton-color" content="#f69435">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="msapplication-starturl" content="/index.html">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <link rel="icon" sizes="192x192" href="images/icon-192x192.png">
+    <link rel="apple-touch-icon" sizes="192x192" href="/images/icon-192x192.png">
+    <link rel="icon" sizes="256x256" href="/images/icon-256x256.png">
+    <link rel="apple-touch-icon" sizes="256x256" href="/images/icon-256x256.png">
+    <link rel="icon" sizes="384x384" href="/images/icon-384x384.png">
+    <link rel="apple-touch-icon" sizes="384x384" href="/images/icon-384x384.png">
+    <link rel="icon" sizes="512x512" href="/images/icon-512x512.png">
+    <link rel="apple-touch-icon" sizes="512x512" href="/images/icon-512x512.png">
+
+    <title>Document</title>
+    <link rel="stylesheet" type="text/css" href="css/bootstrap.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+    <link rel="stylesheet" href="css/nav_bar.css">
+    <script type="text/javascript" src="js/jquery-3.5.1.min.js"></script>
+    <script type="text/javascript" src="js/bootstrap.bundle.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.0.0/animate.min.css"/>
+    <style>
+        .side_tab {
+            z-index: 4;
+            position: fixed;
+            top: 52%;
+            text-align: center;
+            -webkit-transform: rotate(90deg);
+            -ms-transform: rotate(90deg);
+            transform: rotate(90deg);
+        }
+
+        .side_tab:hover{
+            cursor: pointer;
+        }
+
+        .side_tab_table {
+            background-color: white;
+            height: 300px;
+            width: 400px;
+            border-radius: 50px;
+            position: fixed;
+            z-index: 5;
+        }
+
+        .section_1 {
+            background-size: cover;
+            background: url(images/blueberry.jpg) no-repeat center center fixed;
+            height: 100vh;
+            width: 100%;
+        }
+
+        .section_2 {
+            background-size: cover;
+            background: url(images/raspberry.jpg) no-repeat center center fixed;
+            height: 100vh;
+            width: 100%;
+        }
+    </style>
+    <script>
+        function add_animation_sidebar(e,c_str, str,inner_str,  flag, direction){
+            if($(e.target).hasClass(inner_str)){
+                return flag;
+            }
+            if(e.target.id == c_str){
+                if(!flag){
+                    $(str).removeClass(`animate__animated animate__bounceOut${direction}`);
+                }
+                    $(str).css("display","");
+                    $(str).addClass(`animate__animated animate__bounceIn${direction}`);
+            } else {
+                $(str).addClass(`animate__animated animate__bounceOut${direction}`);
+                flag = false;
+            }
+            return flag;
+        }
+        
+        var redeem_list = {};
+
+        //Change name of promotion 
+        var existing_redeem_list = {
+            "9U0T2W": {
+                type: "Coupon",
+                id: "9U0T2W",
+                reduction: 10.0
+            },
+            "8B1J8G": {
+                type: "Coupon",
+                id: "8B1J8G",
+                reduction: 33.3
+            },
+            "5P7A0R": {
+                type: "Coupon",
+                id: "5P7A0R",
+                reduction: 25.0
+            },
+            "Sunday": {
+                type: "Promotion",
+                id: "Sunday",
+                special: "Smoothie S's"
+            },
+            "Monday": {
+                type: "Promotion",
+                id: "Monday",
+                special: "Week M's"
+            },
+            "Tuesday": {
+                type: "Promotion",
+                id: "Tuesday",
+                special: "Tropical T's"
+            },
+            "Wednesday": {
+                type: "Promotion",
+                id: "Wednesday",
+                special: "Meek W's"
+            },
+            "Thursday": {
+                type: "Promotion",
+                id: "Thursday",
+                special: "Tropical T's"
+            },
+            "Friday": {
+                type: "Promotion",
+                id: "Friday",
+                special: "Aye F's"
+            },
+            "Saturday": {
+                type: "Promotion",
+                id: "Saturday",
+                special: "Smoothie S's"
+            }
+        }
+        
+        //change promotion to session storage// Fuck no
+        function redeem_local(redeem){
+            var temp_redeem = JSON.stringify(redeem);
+
+            if(typeof(Storage) !== "undefined"){
+                localStorage.setItem("promotions", temp_redeem);
+            }
+        }
+        
+        function hide(){
+            $("#ask_hide_promo").addClass("animate__animated animate__fadeOut");
+            $("#ask_hide_promo").on("animationend", _ => {
+                $("#ask_hide_promo").css("display","none");
+            });
+        }
+        $(function() {
+            var flag_redeem = true, flag_2 = true;
+            var weekdays = ["Sunday","Monday","Tuesday","Wednesday","Thursday","Friday","Saturday"];
+            $(document).on("click", e => {
+                flag_redeem = add_animation_sidebar(e,"side4","#side_4","delete_btn", flag_redeem, "Right");
+                flag_2 = add_animation_sidebar(e,"side1","#side_1","js-push-btn", flag_2, "Left");
+            });
+
+            //Sorts coupon first, then promotion later?
+            $("form").submit(e => {
+                e.preventDefault();
+                var reduc = 0.0;
+                var id = $("#coupon").val();
+                if(Object.keys(redeem_list).length>0){
+                    for(let i in redeem_list){
+                        if(id === redeem_list[i].id){
+                            $("#coupon_error").append(`<p>Error! You have already redeemed this coupon! Only 1 coupon per customer!</p>`);
+                            $("#coupon").val("");
+                            return;
+                        }
+                    }
+                }
+
+                for(let i in existing_redeem_list){
+                    if(existing_redeem_list[i].id === id){
+                        redeem_list[i] = existing_redeem_list[i];
+                        reduc = existing_redeem_list[i].reduction;
+                        //do delete here // ok thanks
+                        $("#tbody_redeem_list").append(`<tr><td>${existing_redeem_list[i].id}</td><td>Reduce ${existing_redeem_list[i].reduction}%</td><td>${existing_redeem_list[i].type}</td><td><div class="btn btn-danger text-center delete_btn" id="delete_btn${i}">Delete</div></td></tr>`);
+
+                        $(`#delete_btn${i}`).on('click', function(){
+                            $(this).closest('tr').remove();
+                            delete redeem_list[i];
+                            redeem_local(redeem_list);
+                        })
+                    } 
+                }
+                if(reduc > 0)
+                    $("#coupon_error").append(`<p>Congratulations! You are elligble for ${reduc.toFixed(1)}% reduction.</p>`);
+                else
+                    $("#coupon_error").append(`<p>This Coupon ID does not exist. Please try again.</p>`);
+                $("#coupon").val("");
+                redeem_local(redeem_list);
+            });
+
+            for(let i in weekdays){
+                $("#promotion_table").append(`<tr id="promo_${i}"><td>${weekdays[i]}</td><td>${existing_redeem_list[weekdays[i]].special}</td></tr>`);
+            }
+
+            //get day
+            var d = new Date();
+            $(`#promo_${d.getDay()}`).css("background-color","yellow");
+
+            $("#btn_y").on("click", _ => {
+                hide();
+                redeem_list[weekdays[d.getDay()]] = existing_redeem_list[weekdays[d.getDay()]];
+                $("#tbody_redeem_list").append(`<tr><td>${existing_redeem_list[weekdays[d.getDay()]].id}</td><td>${existing_redeem_list[weekdays[d.getDay()]].special}</td><td>${existing_redeem_list[weekdays[d.getDay()]].type}</td><td><div class="btn btn-danger text-center delete_btn" id="delete_btn${weekdays[d.getDay()]}">Delete</div></td></tr>`);
+                $(`#delete_btn${weekdays[d.getDay()]}`).on('click', function(){
+                    $(this).closest('tr').remove();
+                    delete redeem_list[weekdays[d.getDay()]];
+                    redeem_local(redeem_list);
+                });
+                redeem_local(redeem_list);
+            });
+
+            $("#btn_n").on("click", _ => {
+                hide();
+            });
+        });
+    </script>
+    <!-- instant chat - Tawk.to -->
+    <script type="text/javascript">
+        var Tawk_API=Tawk_API||{}, Tawk_LoadStart=new Date();
+        (function(){
+        var s1=document.createElement("script"),s0=document.getElementsByTagName("script")[0];
+        s1.async=true;
+        s1.src='https://embed.tawk.to/5f5cc1824704467e89ee6118/default';
+        s1.charset='UTF-8';
+        s1.setAttribute('crossorigin','*');
+        s0.parentNode.insertBefore(s1,s0);
+        })();
+      </script>
+
+    <link rel="shortcut icon" href="#" />
+</head>
+<body>
+
+    <section id="bar_flix">
+        <div class="container-fluid">
+            <nav class="navbar navbar-inverse">
+              <div class="container-fluid">
+                <ul class="nav navbar-nav" style="display: inline;">
+                  <li><a id="len1" class="hoverable" href="index.html">Home</a></li>
+                  <li><a id="len2" class="hoverable" href="index.html#sec2">About</a></li>
+                  <li><a id="len3" class="hoverable" href="product-details.html">Juices</a></li>
+                  <li><a id="len4" class="hoverable" href="#">Contact</a></li>
+                  <li><a id="len5" class="hoverable" href="#">Promotions</a></li>
+                  <li><a id="len6" class="hoverable" href="new_product.html">New Products</a></li>
+                  <li><a id="len7" class="hoverable" href="wishlist.html">Wish List</a></li>
+                  <li><a id="len8" class="hoverable" href="cart.html">Cart</a></li>
+                </ul>
+              </div>
+            </nav>
+          </div>
+    </section>
+
+    <div class="side_tab" style="left: 0;top: 40%;">
+        <div class="btn btn-success" id="side1">
+            Push Messaging
+        </div>
+    </div>
+
+    <div id="side_1" class="border border-outline-dark side_tab_table" style="display: none;left: 0%;top: 25%; width: 1200px; height: 500px;">
+        <table class="table">
+            <thead class="thead-dark text-center">
+                <tr><th>Push Messaging</th></tr>
+            </thead>
+            <tbody>
+                <tr><td><button class="js-push-btn">Enable Push Messaging</button></td></tr>
+                <div class="js-sub-endpoint">
+                    <tr><td>Subscription Object:</td></tr>
+                    <tr><td style="word-wrap:break-word;"><code class="js-subscription-json"></code></td></tr>
+                    <tr><td>Endpoint URL:</td></tr>
+                    <tr><td style="word-wrap:break-word;"><code class="js-endpoint-url"></code></td></tr>
+                </div>
+            </tbody>
+        </table>
+    </div>
+
+    <script src="js/main_h.js"></script>
+    
+    <div class="side_tab" style="right: 0;top: 10%;">
+        <div class="btn btn-primary" id="side4">
+            Redeem
+        </div>
+    </div>
+
+    <div id="side_4" class="border border-outline-dark side_tab_table" style="display: none;right: 0;top: 5%;">
+        <table class="table">
+            <thead class="thead-dark text-center">
+                <tr><th colspan="4">Redeem List</th></tr>
+            </thead>
+            <tbody id="tbody_redeem_list">
+            </tbody>
+            <tfoot>
+                <tr><th><a href="checkout.html" style="text-decoration: none;color: white;" class="btn btn-success delete_btn">Checkout</th></tr>
+            </tfoot>
+        </table>
+    </div>
+
+    <div class="section_1">
+        <div class="d-flex align-items-center  justify-content-center h-100 section_1">
+            <div class="text-center animate__animated animate__heartBeat" style="width: 800px; height: 100px; background-color: purple;" id="bg-1">
+                <h1 style="color: white; font-family:Arial, Helvetica, sans-serif; font-size: 500%;">Daily Promotions</h1>
+            </div>
+        </div>
+    </div>
+
+    <br/>
+
+    <h1 class="text-center">Promotions</h1>
+
+    <div class="d-flex align-items-center justify-content-center">
+        <table class="table text-center border-outline-dark" style="width: 600px;">
+            <thead class="thead-dark">
+                <tr><th colspan="2" class="text-center" style="height: 30px;">Promotion List</th></tr>
+            </thead>
+            <tbody id="promotion_table">
+            </tbody>
+        </table>
+    </div>
+
+    <div id="ask_hide_promo" class="text-center">
+        <h1>Would you like to add the current promotion to the Redeem List?</h1>
+
+        <button class="btn btn-primary" id="btn_y">Yes</button>&nbsp;<button class="btn btn-primary" id="btn_n">No</button>
+    </div>
+
+    <h3 class="text-center">Depending on certain dates, you'll be able to get daily promotions that offers a price reduction based on the type of drink selected.</h3>
+
+    <br/>
+
+    <div class="section_2">
+        <div class="d-flex align-items-center  justify-content-center h-100">
+            <div class="text-center" style="width: 600px; height: 100px; background-color:green;" id="bg-1">
+                <h1 style="color: white; font-family:Arial, Helvetica, sans-serif; font-size: 500%;">Coupons</h1>
+            </div>
+        </div>
+    </div>
+
+    <h1 class="text-center">* You can only add 3 Coupons or Promotions to the Redeem List</h1>
+
+    <h4 class="text-center">The requested format is a 6 character code, each letter followed by a capital Alphabet</h4>
+
+    <h1 class="text-center">Coupon</h1>
+
+    <div class="d-flex align-items-center justify-content-center">
+        <form>
+            <input type="text" id="coupon" pattern="([0-9][A-Z]){3}" required />
+            <input type="submit" value="Submit" />
+        </form>
+    </div>
+
+    <br/>
+
+    <div class="d-flex align-items-center justify-content-center">
+        <div class="border border-dark" style="height: 300px; width: 800px; overflow: scroll;" id="coupon_error"></div>
+    </div>
+
+</body>
+</html>

@@ -1,0 +1,182 @@
+<html>
+<head>
+   <title>HERE Map</title>
+   <link rel="stylesheet" type="text/css" href="css/bootstrap.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+    <link rel="stylesheet" href="css/nav_bar.css">
+    <script type="text/javascript" src="js/jquery-3.5.1.min.js"></script>
+    <script type="text/javascript" src="js/bootstrap.bundle.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.0.0/animate.min.css"/>
+    <link rel="stylesheet" href="css/weather.css">
+
+    <style>
+       .side_tab {
+         z-index: 4;
+         position: fixed;
+         left: 0;
+         text-align: center;
+         -webkit-transform: rotate(90deg);
+         -ms-transform: rotate(90deg);
+         transform: rotate(90deg);
+      }
+
+      .side_tab:hover{
+        cursor: pointer;
+      }
+
+      .side_tab_table {
+        background-color: white;
+        height: 300px;
+        width: 400px; 
+        border-radius: 50px;
+        position: fixed; 
+        left: 0;
+        z-index: 5;
+      }
+    </style>
+
+   <script src="https://js.api.here.com/v3/3.1/mapsjs-core.js"></script>
+   <script src="https://js.api.here.com/v3/3.1/mapsjs-service.js"></script>
+   <script src="https://js.api.here.com/v3/3.1/mapsjs-ui.js"></script>
+   <script src="https://js.api.here.com/v3/3.1/mapsjs-mapevents.js"></script>
+   <script>
+   var image_link_1 = "https://img.icons8.com/fluent/48/000000/user-location.png"
+   var image_link_2 = "https://img.icons8.com/ios-filled/50/000000/next-location.png"
+
+   var stall_location = [
+            {
+                lat: 4.4721,
+                lon: 101.0412,
+                place: "Batu Gajah"
+            },
+            {
+                lat: 4.5975,
+                lon: 101.0901,
+                place: "Ipoh"
+            },
+            {
+                lat: 4.3085,
+                lon: 101.1537,
+                place: "Kampar"
+            },
+            {
+                lat: 4.1977,
+                lon: 101.2615,
+                place: "Tapah"
+            },
+            {
+                lat: 4.0224,
+                lon: 101.0206,
+                place: "Teluk Intan"
+            },
+            {
+                lat: 4.7736,
+                lon: 100.9420,
+                place: "Kuala Kangsar"
+            },
+            {
+                lat: 4.2363,
+                lon: 100.6322,
+                place: "Lumut"
+            },
+        ]
+
+   function createMarker(map, latitude, longitude, image_link){
+       //2.Add Markers
+       var LocationOfMarker = { lat: latitude, lng: longitude };
+       // Create a marker icon from an image URL:
+       var defaultIcon = new H.map.Icon(`${image_link}`, {size: {w: 56, h: 56}});
+       // Create a marker using the previously instantiated icon:
+       var marker = new H.map.Marker(LocationOfMarker, { icon: defaultIcon });
+
+       // Add the marker to the map:
+       map.addObject(marker);
+
+       map.setCenter(LocationOfMarker);
+     }
+   function createMap(class_id, api_key, latitude, longitude, target_latitude, target_longitude, zoom_ratio){
+     const platform = new H.service.Platform({ apikey: api_key });
+     const defaultLayers = platform.createDefaultLayers();
+     const map = new H.Map(document.getElementById(class_id),
+         defaultLayers.vector.normal.map, {
+         center: { lat: latitude, lng: longitude },
+         zoom: zoom_ratio,
+         pixelRatio: window.devicePixelRatio || 1
+     });
+
+     // This adds a resize listener to make sure that the map occupies the whole container
+     window.addEventListener('resize', () => map.getViewPort().resize());
+
+     //Step 3: make the map interactive
+     // MapEvents enables the event system
+     // Behavior implements default interactions for pan/zoom (also on mobile touch environments)
+     const behavior = new H.mapevents.Behavior(new H.mapevents.MapEvents(map));
+
+     // Create the default UI components
+     const ui = H.ui.UI.createDefault(map, defaultLayers);
+
+     createMarker(map, latitude, longitude, image_link_1);
+     createMarker(map, target_latitude, target_longitude, image_link_2);
+
+     const request = {
+         mode: "fastest;car;traffic:enabled",
+         waypoint0: `geo!${latitude},${longitude}`,
+         waypoint1: `geo!${target_latitude},${target_longitude}`,
+         representation: 'display',
+         routeAttributes: "summary"
+      };
+      //Initialize routing service
+      const router = platform.getRoutingService();
+      router.calculateRoute(request, response => {
+         //Parse the route's shape
+         const shape = response.response.route[0].shape.map(x => x.split(','));
+         const linestring = new H.geo.LineString();
+         shape.forEach(s => linestring.pushLatLngAlt(s[0], s[1]));
+         //Create a polyline with the shape
+         const routeLine = new H.map.Polyline(linestring, {
+            style: { strokeColor: 'blue', lineWidth: 3 }
+         });
+         //Add route to map
+         map.addObject(routeLine);
+         //Zoom to bounds of the route shape
+         map.getViewModel().setLookAtData({ bounds: routeLine.getBoundingBox() });
+
+         var d = new Date();
+         let str = `Today's Store Location is ${stall_location[d.getDay()].place}. The distance between you and the stall is ${response.response.route[0].summary.distance}KM.`;
+
+         console.log(str);
+      });
+   }
+
+   var api_key_here_map = 'fbrrFZ440Xymdr9RXt6lviz8RztTYRUo6YGsXqDPI_Q';
+   
+   $(function() {
+     navigator.geolocation.getCurrentPosition(function(pos){
+       var d = new Date();
+       createMap("map",api_key_here_map,pos.coords.latitude,pos.coords.longitude,stall_location[d.getDay()].lat,stall_location[d.getDay()].lon,17);
+      });
+   });
+  </script>
+</head>
+<body>
+  <section id="bar_flix">
+    <div class="container-fluid">
+        <nav class="navbar navbar-inverse">
+          <div class="container-fluid">
+            <ul class="nav navbar-nav" style="display: inline;">
+              <li><a id="len1" class="hoverable" href="index.html">Home</a></li>
+              <li><a id="len2" class="hoverable" href="index.html#sec2">About</a></li>
+              <li><a id="len3" class="hoverable" href="product-details.html">Juices</a></li>
+              <li><a id="len4" class="hoverable" href="index.html#contact">Contact</a></li>
+              <li><a id="len5" class="hoverable" href="promotion.html">Promotions</a></li>
+              <li><a id="len6" class="hoverable" href="new_product.html">New Products</a></li>
+              <li><a id="len7" class="hoverable" href="wishlist.html">Wish List</a></li>
+              <li><a id="len8" class="hoverable" href="cart.html">Cart</a></li>
+            </ul>
+          </div>
+        </nav>
+      </div>
+</section>
+<div id="map"></div>
+</body>
+</html>
