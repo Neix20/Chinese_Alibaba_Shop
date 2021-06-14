@@ -31,5 +31,18 @@ Bootstrap version 4.6, JQuery
 ... And Many More
 
 ## Demonstration
+1. Homepage
+   ![Index](Images/1.png)
+2. Product Page
+   ![Blended](Images/2_a.gif)
+   ![Smoothie](Images/2_b.gif)
+   ![Crushed Juice](Images/2_c.gif)
+   ![Ice Blended](Images/2_d.gif)
+3. Wishlist
+   ![Wish List](Images/3.gif)
+4. Shopping Cart
+   ![Shopping Cart](Images/4.gif)
+5. Checkout
+   ![Receipt](Images/5.gif)
 
 *Note: This website does not have any side server functionalities. This entire website does not use any SQL database or NoSQL Database like MongoDB or Google Firebase. This website is made entirely using Javascript and the product items are stored in a JSON File.*
