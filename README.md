@@ -1,5 +1,5 @@
 # Chinese_Alibaba_Shop
-Y2S1 Web Design Project
+Y2S1 Web Design Project\
 Task: Design an ecommerce website using HTML, CSS and Javascript
 
 ## Group Members
